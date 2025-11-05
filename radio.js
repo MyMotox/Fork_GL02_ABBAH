@@ -1,7 +1,7 @@
-var Engine = { 
+var radio = { 
 check: function(){ 
-console.log("Engine Ready !") 
+console.log("radio Ready !") 
 return true 
 } 
 } 
-module.exports = Engine
+module.exports = radio
