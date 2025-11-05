@@ -1,7 +1,7 @@
 var radio = { 
 check: function(){ 
 console.log("radio Ready !");
-console.log("Blue level checked".magenta); 
+console.log("Magenta level checked".magenta); 
 return true 
 } 
 } 
