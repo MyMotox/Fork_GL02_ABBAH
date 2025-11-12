@@ -27,6 +27,7 @@ la commande check).
 > Tokenize converti en liste le fichier.
 5) Faîtes afficher au fur et à mesure les symboles reconnus par le parser afin de mieux comprendre
 son fonctionnement (avec l’option -s de la commande check).
+    node caporalCli.js check ./sample.vpf -s
 6) Quelles différences faîtes-vous entre les point d'intérêt contenu dans un fichier vpf et ceux qui
 sont construits avec new POI() ?
 > Le new POI dans VpfParser.js est sans ratings.
