@@ -2,10 +2,13 @@
 
 var Command = { 
 	check: function(){ 
-	console.log("Commands Ready !");
+	console.log("Commands Ready !") 
+	console.log("Magenta level checked".magenta);
 	console.log("Yellow level checked".yellow);
 	return true; 
 
 	} 
 } 
 module.exports = Command 
+
+
