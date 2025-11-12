@@ -35,6 +35,8 @@ sont construits avec new POI() ?
 7) Prenez le temps de comprendre l’organisation du framework Caporal.js (https://caporal.io/guide).
 8) Ajouter une commande « readme » permettant d’afficher le contenu du fichier README.txt dans
 la console (vous pouvez utiliser : fs.readFile(<file>, "utf-8", callback)).
+
+node caporalCli.js readme ./documents/README.txt
 9) Ajoutez une commande « search » à un argument permettant de rechercher les point d’intérêt
 contenant une certaine chaîne de caractère. Pour ce faire utilisez la fonction « filter ».
 ## 6. Ajout de commandes à base de map() et reduce() – caporalCli.js
