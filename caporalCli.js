@@ -127,7 +127,7 @@ cli
 			return logger.warn(err);
 		}
   
-		analyzer = new VpfParser();
+	const analyzer = new VpfParser();
 		analyzer.parse(data);
 		
 		if(analyzer.errorCount === 0){
@@ -135,7 +135,10 @@ cli
 			// ToDo: Prepare the data for avg //
 			// let avg = <un array de POI ayant un attribut "averageRatings" égal à la moyenne des notes qu'il a reçu>
 			
+
+
 			var avgChart = {
+				$schema: 'https://vega.github.io/schema/vega-lite/v5.json',
 				//"width": 320,
 				//"height": 460,
 				"data" : {
