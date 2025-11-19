@@ -116,6 +116,36 @@ cli
     })
 
 	// abc
+.command('abc', 'permettant de restructurer la liste de POI sous la forme d’un objet classant les point d’intérêt par rapport à la première lettre de leur nom')
+.argument('<file>', 'The Vpf file to read')
+.action(({args, options, logger}) => {
+    fs.readFile(args.file, 'utf8', function (err, data) {
+        if (err) {
+            return logger.warn(err);
+        }
+        let analyzer = new VpfParser(); 
+        analyzer.parse(data);
+        if(analyzer.errorCount === 0) {
+            let poiAFiltrer = analyzer.parsedPOI;
+
+            // Restructuration des POI par la première lettre de leur nom
+            const restructuredPOI = poiAFiltrer.reduce((acc, poi) => {
+                const firstLetter = poi.name[0].toLowerCase();
+                if (!acc[firstLetter]) {
+                    acc[firstLetter] = [];
+                }
+                acc[firstLetter].push(poi);
+                return acc;
+            }, {});
+
+            logger.info("%s", JSON.stringify(restructuredPOI, null, 2));
+        } else {
+            logger.info("The .vpf file contains error".red);
+        }
+    });
+})
+
+
 	
 	// average with chart
 	.command('averageChart', 'Compute the average note of each POI and export a Vega-lite chart')
