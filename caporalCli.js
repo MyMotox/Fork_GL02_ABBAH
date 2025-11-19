@@ -47,7 +47,7 @@ cli
 			return logger.warn(err);
 		}
 
-		analyzer = new VpfParser('-t');
+		const analyzer = new VpfParser('-t');
 		analyzer.parse(data);
 
 		});
