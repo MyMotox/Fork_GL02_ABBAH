@@ -47,7 +47,7 @@ cli
 			return logger.warn(err);
 		}
 
-		analyzer = new VpfParser('-t');
+		const analyzer = new VpfParser('-t');
 		analyzer.parse(data);
 
 		});
@@ -116,6 +116,21 @@ cli
     })
 
 	// abc
+    .command('abc', '')
+    .argument('<file>', 'The Vpf file to search')
+    .action(({args, options, logger}) => {
+       fs.readFile(args.file, 'utf8', function (err,data) {
+           if (err) {
+               return logger.warn(err);
+           }
+           const analyzer = new VpfParser();
+
+           if(analyzer.errorCount === 0) {
+               const POIs = analyzer.parsedPOI;
+
+           }
+           });
+    })
 	
 	// average with chart
 	.command('averageChart', 'Compute the average note of each POI and export a Vega-lite chart')
@@ -127,13 +142,26 @@ cli
 			return logger.warn(err);
 		}
   
-		analyzer = new VpfParser();
+		const analyzer = new VpfParser();
 		analyzer.parse(data);
 		
 		if(analyzer.errorCount === 0){
 
 			// ToDo: Prepare the data for avg //
 			// let avg = <un array de POI ayant un attribut "averageRatings" égal à la moyenne des notes qu'il a reçu>
+            const avg = analyzer.parsedPOI;
+            avg.forEach(poi => {
+                if (poi.ratings.length === 0){
+                    poi.averageRatings = 0;
+                } else {
+                    let sum = 0
+                    poi.ratings.forEach(rating => {
+                        sum += parseInt(rating);
+                    })
+                    poi.averageRatings = sum / poi.ratings.length;
+                }
+
+            });
 			
 			var avgChart = {
 				//"width": 320,
