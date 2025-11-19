@@ -103,8 +103,9 @@ cli
                 POIs.forEach(poi => {
                     let sum = 0
                     poi.ratings.forEach(rating => {
-                        sum += rating;
+                        sum += parseInt(rating);
                     })
+                    console.log(poi.ratings.length);
                     poi.rateAvg = sum / poi.ratings.length;
                     console.log(poi)
                 });
