@@ -1,17 +1,16 @@
 # Réponses TP8
 
 ## 2. Aide du programme
-0) Prenez connaissance de l’aide du programme caporalCli.js. Lancez le programme (si ce n’est pas
-déjà fait) avec la commande help. Chaque commande dispose de sa propre aide aussi (ie, node
+0) Prenez connaissance de l’aide du programme caporalCli.js. Lancez le programme (si ce n’est pas déjà fait) avec la commande help. Chaque commande dispose de sa propre aide aussi (ie, node
 caporalCli.js help check).
 
-1) Regarder à quoi ressemble le type des fichier .vpf qui sont analysés par le programme avec un
-éditeur de texte. Quels sont les attributs d’un objet de type POI ?
+1) Regarder à quoi ressemble le type des fichier .vpf qui sont analysés par le programme avec un éditeur de texte. Quels sont les attributs d’un objet de type POI ?
 > // The list of POI parsed from the input file.
 > 	this.name = nm;
 	this.lat = lt;
 	this.lng = lg;
 	this.ratings = [].concat(r);
+
 ## 3. Analyse de la grammaire ABNF – README.txt
 2) Quel est le non terminal de départ de la grammaire implémentée ?
 > <liste_poi> = *(<poi> <eol>) "$$"
@@ -21,27 +20,23 @@ caporalCli.js help check).
 
 ## 4. Analyse du parser – VpfParser.js
 node caporalCli.js check ./sample.vpf
-4) Dans VpfParser.js, que fait précisément la méthode « tokenize » ? Faîtes affichez le résultat de
-cette opération en vous aidants des options déjà défini pour la commande check (avec l’option -t de
-la commande check).
+4) Dans VpfParser.js, que fait précisément la méthode « tokenize » ? Faîtes affichez le résultat de cette opération en vous aidants des options déjà défini pour la commande check (avec l’option -t de la commande check).
 > Tokenize converti en liste le fichier.
-5) Faîtes afficher au fur et à mesure les symboles reconnus par le parser afin de mieux comprendre
-son fonctionnement (avec l’option -s de la commande check).
-    node caporalCli.js check ./sample.vpf -s
-6) Quelles différences faîtes-vous entre les point d'intérêt contenu dans un fichier vpf et ceux qui
-sont construits avec new POI() ?
+5) Faîtes afficher au fur et à mesure les symboles reconnus par le parser afin de mieux comprendre son fonctionnement (avec l’option -s de la commande check).
+//  node caporalCli.js check ./sample.vpf -s
+6) Quelles différences faîtes-vous entre les point d'intérêt contenu dans un fichier vpf et ceux qui sont construits avec new POI() ?
 > Le new POI dans VpfParser.js est sans ratings.
+
 ## 5. Ajout de commandes basiques à la CLI – caporalCli.js
 7) Prenez le temps de comprendre l’organisation du framework Caporal.js (https://caporal.io/guide).
-8) Ajouter une commande « readme » permettant d’afficher le contenu du fichier README.txt dans
-la console (vous pouvez utiliser : fs.readFile(<file>, "utf-8", callback)).
+8) Ajouter une commande « readme » permettant d’afficher le contenu du fichier README.txt dans la console (vous pouvez utiliser : fs.readFile(<file>, "utf-8", callback)).
 
 node caporalCli.js readme ./documents/README.txt
-9) Ajoutez une commande « search » à un argument permettant de rechercher les point d’intérêt
-contenant une certaine chaîne de caractère. Pour ce faire utilisez la fonction « filter ».
+9) Ajoutez une commande « search » à un argument permettant de rechercher les point d’intérêt contenant une certaine chaîne de caractère. Pour ce faire utilisez la fonction « filter ».
+
+
 ## 6. Ajout de commandes à base de map() et reduce() – caporalCli.js
-10) Ajouter une commande « average » permettant de modifier chaque POI en ajoutant un attribut
-contenant la moyenne des notes obtenues et de l’afficher dans la console (s’il n’y a pas de note, la
+10) Ajouter une commande « average » permettant de modifier chaque POI en ajoutant un attribut contenant la moyenne des notes obtenues et de l’afficher dans la console (s’il n’y a pas de note, la
 moyenne pour ce point d’intérêt est 0). Pour ce faire utilisez la fonction « map ».
 11) Ajouter une commande « abc » permettant de restructurer la liste de POI sous la forme d’un
 objet classant les point d’intérêt par rapport à la première lettre de leur nom (ie, { "a" : [ POI, POI … ],
