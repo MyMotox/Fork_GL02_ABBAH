@@ -4,6 +4,7 @@ const VpfParser = require('./VpfParser.js');
 
 const vg = require('vega');
 const vegalite = require('vega-lite');
+const analyzer = require("./VpfParser");
 
 const cli = require("@caporal/core").default;
 
@@ -38,10 +39,15 @@ cli
 	})
 	
 	// readme
-	//.command('readme', 'Display the README.txt file')
-	//.action(({args, options, logger}) =>
-	//  ...
-	//})
+	.command('readme', 'Display the README.txt file')
+	.action(({args, options, logger}) => {
+        fs.readFile("./documents/README.txt", "utf-8", function (err,data) {
+            if (err) {
+                logger.warn(err);
+            }
+            logger.info(data)
+        })
+	})
 	
 	
 	// search
@@ -54,13 +60,14 @@ cli
 			return logger.warn(err);
 		}
   
-		analyzer = new VpfParser();
+		const analyzer = new VpfParser();
 		analyzer.parse(data);
 		
 		if(analyzer.errorCount === 0){
 		
 			// Filtre à ajouter //
 			let poiAFiltrer = analyzer.parsedPOI;
+            poiAFiltrer = poiAFiltrer.filter( (poi) => {return poi.name.includes(args.needle);});
 			logger.info("%s", JSON.stringify(poiAFiltrer, null, 2));
 			// Filtre à ajouter //
 			
@@ -72,8 +79,33 @@ cli
 	})
 
 	// average
-	//.command('average', 'Compute the average note of each POI')
-	//.alias('avg')
+	.command('average', 'Compute the average note of each POI')
+	.alias('avg')
+    .argument('<file>', 'The Vpf file to search')
+    .action(({args, options, logger}) => {
+        fs.readFile(args.file, 'utf8', function (err,data) {
+            if (err) {
+                return logger.warn(err);
+            }
+
+            const analyzer = new VpfParser();
+            analyzer.parse(data);
+
+            if (analyzer.errorCount === 0) {
+                const POIs = analyzer.parsedPOI;
+                POIs.forEach(poi => {
+                    let sum = 0
+                    poi.ratings.forEach(rating => {
+                        sum += rating;
+                    })
+                    poi.rateAvg = sum / poi.ratings.length;
+                    console.log(poi)
+                });
+            } else {
+                logger.info("The .vpf file contains error".red);
+            }
+        })
+    })
 
 	// abc
 	
