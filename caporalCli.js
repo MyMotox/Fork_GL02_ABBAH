@@ -179,6 +179,7 @@ cli
             });
 
 			var avgChart = {
+				$schema: 'https://vega.github.io/schema/vega-lite/v5.json',
 				//"width": 320,
 				//"height": 460,
 				"data" : {
