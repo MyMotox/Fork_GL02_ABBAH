@@ -36,20 +36,15 @@ node caporalCli.js readme ./documents/README.txt
 
 
 ## 6. Ajout de commandes à base de map() et reduce() – caporalCli.js
-10) Ajouter une commande « average » permettant de modifier chaque POI en ajoutant un attribut contenant la moyenne des notes obtenues et de l’afficher dans la console (s’il n’y a pas de note, la
-moyenne pour ce point d’intérêt est 0). Pour ce faire utilisez la fonction « map ».
-11) Ajouter une commande « abc » permettant de restructurer la liste de POI sous la forme d’un
-objet classant les point d’intérêt par rapport à la première lettre de leur nom (ie, { "a" : [ POI, POI … ],
-"b" : [ etc.). Pour ce faire utilisez la fonction « reduce ».
+10) Ajouter une commande « average » permettant de modifier chaque POI en ajoutant un attribut contenant la moyenne des notes obtenues et de l’afficher dans la console (s’il n’y a pas de note, lamoyenne pour ce point d’intérêt est 0). Pour ce faire utilisez la fonction « map ».
+
+11) Ajouter une commande « abc » permettant de restructurer la liste de POI sous la forme d’un objet classant les point d’intérêt par rapport à la première lettre de leur nom (ie, { "a" : [ POI, POI … ], "b" : [ etc.). Pour ce faire utilisez la fonction « reduce ».
+
 ## 7. Génération de graphique et fonctionnement du framework
-13) La commande « averageChart » doit permettre de générer un graphique au format SVG des notes
-moyennes reçues par chaque POI. Pour le moment elle est incomplète car elle aucune donnée ne lui
-est fournie. Corrigez le code associé à la commande pour pouvoir générer le graphique. (you will
-need to install the canvas module if you want to make .png output :
+13) La commande « averageChart » doit permettre de générer un graphique au format SVG des notes moyennes reçues par chaque POI. Pour le moment elle est incomplète car elle aucune donnée ne lui est fournie. Corrigez le code associé à la commande pour pouvoir générer le graphique. (you will need to install the canvas module if you want to make .png output :
 https://github.com/Automattic/node-canvas)
-14) En étudiant le code source du programme de caporalCli.js : Quelle différence faîtes-vous entre
-les abstractions commande, argument, option et argument que vous offre le framework ? Faîtes une
-hypothèse sur le type de la valeur de retour des fonctions argument() et option() ?
+
+14) En étudiant le code source du programme de caporalCli.js : Quelle différence faîtes-vous entre les abstractions commande, argument, option et argument que vous offre le framework ? Faîtes une hypothèse sur le type de la valeur de retour des fonctions argument() et option() ?
 
 # X. Explications cas VpfParser
 Le vpfParser donne un exemple d'un parser récursif descendant. Un parser passe tout d'abord par
