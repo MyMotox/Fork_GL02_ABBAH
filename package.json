@@ -11,6 +11,7 @@
   "license": "MIT/BSD",
   "dependencies": {
     "@caporal/core": "^3.1.5",
+    "canvas": "^3.2.0",
     "colors": "^1.4.0",
     "vega": "^5.17.0",
     "vega-lite": "^4.17.0"
