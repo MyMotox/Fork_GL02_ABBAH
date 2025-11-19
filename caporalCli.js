@@ -40,14 +40,21 @@ cli
 	
 	// readme
 	.command('readme', 'Display the README.txt file')
+	.argument('<file>', 'The Vpf file to read')
 	.action(({args, options, logger}) => {
-        fs.readFile("./documents/README.txt", "utf-8", function (err,data) {
-            if (err) {
-                logger.warn(err);
-            }
-            logger.info(data)
-        })
+		fs.readFile(args.file, 'utf8', function (err,data) {
+		if (err) {
+			return logger.warn(err);
+		}
+
+		analyzer = new VpfParser('-t');
+		analyzer.parse(data);
+
+		});
 	})
+	//.action(({args, options, logger}) =>
+	//  ...
+	//})
 	
 	
 	// search
