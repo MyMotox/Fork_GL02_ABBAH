@@ -252,7 +252,9 @@ cli
 
     .command('search', 'search question')
     .argument('<file>', 'The gift file to use')
-    .argument('<ele>', 'keyword')
+    .argument('<id>', 'search by id')
+    .argument('<type>', 'search by type')
+    .argument('<text>', 'search by text')
     .action(({args, options, logger}) => {
         fs.readFile(args.file, 'utf8', function (err,data) {
             if (err) {
@@ -263,7 +265,7 @@ cli
             analyzer.parse(data);
 
             if (analyzer.errorCount === 0) {
-                let quest = analyzer.parsedQuestion.filter( (q) => {return q.id.includes(args.ele);});
+                let quest = analyzer.parsedQuestion.filter( (q) => {return q.id.includes(args.id) || q.type.includes(args.type) || q.text.includes(args.text)});
 
                 logger.info(quest);
             }
