@@ -82,14 +82,14 @@ QuestionParser.prototype.question = function(input){
         this.next(input);
     }
 
-    console.log(input)
+    // console.log(input)
 
     if(this.check("::", input)){
         // this.expect("::", input);
         var args = this.body(input);
         var p = new Question(args.id, args.text,"", []);
         this.reponses(input, p);
-        this.expect("\r\n",input);
+        // this.expect("\r\n",input);
         this.parsedQuestion.push(p);
         if(input.length > 0){
             this.question(input);
