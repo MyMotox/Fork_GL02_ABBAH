@@ -1,4 +1,4 @@
-var POI = require('./POI');
+var POI = require('../classes/POI');
 
 
 // VpfParser

@@ -1,10 +1,11 @@
+#!/usr/bin/env node
 const fs = require('fs');
 const colors = require('colors');
-const VpfParser = require('./VpfParser.js');
+const VpfParser = require('../parsers/VpfParser.js');
 
 const vg = require('vega');
 const vegalite = require('vega-lite');
-const analyzer = require("./VpfParser");
+const analyzer = require("../parsers/VpfParser");
 
 const cli = require("@caporal/core").default;
 
