@@ -28,3 +28,7 @@ npm link            # rend les commandes bin accessibles depuis le terminal
 ```
 
 ## 3. Equipe
+
+Chef d'équipe: Héléna
+
+Membres: Sacha; Jules; Fadi; Emeline
