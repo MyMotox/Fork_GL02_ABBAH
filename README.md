@@ -1,5 +1,6 @@
 # Projet GL02 - Groupe ABBAH
 
+
 Notre projet est développé en JavaScript (Node.js) dans le cadre du cours GL02 – Fondements de l'ingénierie logicielle.
 Le code est structuré pour répondre directement au cahier des charges d'une application console "Outil de gestion еt dе génération d’еxamеns au format GIFT".
 
