@@ -1,11 +1,11 @@
-import Reponse from "./reponse.js";
+const Reponse = require('./Reponse');
 
 /**
  *
  * @param {string} id
  * @param {string} text
  * @param {string} type
- * @param {Array<Reponse>} responses
+ * @param {Array<string>} responses
  */
 var Question = function(id, text, type, responses){
     this.id = id;
@@ -34,4 +34,8 @@ Question.prototype.equal = function(question1, question2){
     return question1.id === question2.id;
 };
 
-export default Question;
+Question.prototype.addRep = function(rep){
+    this.responses.push(rep);
+}
+
+module.exports = Question;
