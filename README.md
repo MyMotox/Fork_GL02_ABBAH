@@ -6,12 +6,14 @@ Le code est structuré pour répondre directement au cahier des charges d'une ap
 
 ---
 
+
 ## 1. Installation (à la première utilisation)
 
 ```bash
 npm install         # installe les dépendances
 npm link            # rend les commandes bin accessibles depuis le terminal
 ```
+
 
 ## 2. Architecture du code
 ```powershell
@@ -24,3 +26,5 @@ npm link            # rend les commandes bin accessibles depuis le terminal
 │   └── exports/             # Génération de sorties (visualisations)
 ├── tests/                   # Tests unitaires
 ```
+
+## 3. Equipe
