@@ -2,6 +2,7 @@
 const fs = require('fs');
 const colors = require('colors');
 const VpfParser = require('../parsers/VpfParser.js');
+const QuestionParser = require('../parsers/QuestionParser.js');
 
 const vg = require('vega');
 const vegalite = require('vega-lite');
@@ -227,7 +228,47 @@ cli
 			}
 			
 		});
-	})	
+	})
+
+    .command('view', 'display question')
+    .argument('<file>', 'The gift file to use')
+    .argument('<id>', 'The question id')
+    .action(({args, options, logger}) => {
+        fs.readFile(args.file, 'utf8', function (err,data) {
+            if (err) {
+                return logger.warn(err);
+            }
+
+            const analyzer = new QuestionParser();
+            analyzer.parse(data);
+
+            if (analyzer.errorCount === 0) {
+                let quest = analyzer.parsedQuestion.filter( (q) => {return q.id === args.id;});
+
+                logger.info(quest);
+            }
+        });
+    })
+
+    .command('search', 'search question')
+    .argument('<file>', 'The gift file to use')
+    .argument('<ele>', 'keyword')
+    .action(({args, options, logger}) => {
+        fs.readFile(args.file, 'utf8', function (err,data) {
+            if (err) {
+                return logger.warn(err);
+            }
+
+            const analyzer = new QuestionParser();
+            analyzer.parse(data);
+
+            if (analyzer.errorCount === 0) {
+                let quest = analyzer.parsedQuestion.filter( (q) => {return q.id.includes(args.ele);});
+
+                logger.info(quest);
+            }
+        });
+    })
 
 	
 cli.run(process.argv.slice(2));
