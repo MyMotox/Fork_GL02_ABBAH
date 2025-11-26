@@ -15,8 +15,10 @@ var QuestionParser = function(sTokenize, sParsedSymb){
 // <eol> = CRLF
 QuestionParser.prototype.tokenize = function(data){
     var separator = /(\/\/|::|\{|\}|=|~)/;
+    // data = data.filter((val, idx) => !val.match(/\r\n/g))
+    // data = data.replace(/\r\n/g, '');
     data = data.split(separator);
-    data = data.filter((val, idx) => !val.match(separator));
+    // data = data.filter((val, idx) => !val.match(separator));
     return data;
 }
 
@@ -78,7 +80,14 @@ QuestionParser.prototype.expect = function(s, input) {
 }
 
 QuestionParser.prototype.question = function(input){
+    console.log(input)
+
+    if (!this.check("//", input) || !this.check("::", input)){
+        this.next(input);
+    }
+
     if (this.check("//", input)){
+        this.next(input);
         this.next(input);
     }
 
@@ -134,16 +143,20 @@ QuestionParser.prototype.text = function(input){
 QuestionParser.prototype.reponses = function (input, curPoi){
     if(this.check("{", input)){
         this.expect("{", input);
-        var curS = this.next(input);
-        if(matched = curS.match(/^[a-zA-Z0-9\s_-]+$/)){
-            curPoi.addRating(matched[0]);
-            if(input.length > 0){
-                this.reponses(input, curPoi);
-            }
-        }else{
-            this.errMsg("Invalid note");
-        }
-        this.expect("}", input);
+    }
+
+    //var curS = this.next(input);
+    if (this.check("=", input) || this.check("~", input)){
+        this.next(input);
+        curPoi.addRep(input[0]);
+    } else {
+        this.next(input);
+    }
+
+    if(!this.check("}", input)){
+        this.reponses(input, curPoi);
+    } else{
+        this.next(input);
     }
 }
 
