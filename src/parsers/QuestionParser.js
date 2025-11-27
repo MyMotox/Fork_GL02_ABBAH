@@ -1,163 +1,69 @@
 var Question = require('../classes/Question');
-var reponse = require('../classes/Reponse');
+var Reponse = require('../classes/Reponse');
 
-var QuestionParser = function(sTokenize, sParsedSymb){
+var QuestionParser = function(){
     this.parsedQuestion = [];
-    this.symb = ["//","::","{","}","=","~"];
-    this.showTokenize = sTokenize;
-    this.showParsedSymbols = sParsedSymb;
     this.errorCount = 0;
 }
 
-// Parser procedure
+QuestionParser.prototype.parseGift = function(giftText){
+    const lines = giftText.split(/\r?\n/);
 
-// tokenize : tranform the data input into a list
-// <eol> = CRLF
-QuestionParser.prototype.tokenize = function(data){
-    var separator = /(\/\/|::|\{|\}|=|~)/;
-    // data = data.filter((val, idx) => !val.match(/\r\n/g))
-    // data = data.replace(/\r\n/g, '');
-    data = data.split(separator);
-    // data = data.filter((val, idx) => !val.match(separator));
-    return data;
-}
+    const cleaned = lines
+        .map(l => l.trim())
+        .filter(l => l && !l.startsWith('//'));
 
-// parse : analyze data by calling the first non terminal rule of the grammar
-QuestionParser.prototype.parse = function(data){
-    var tData = this.tokenize(data);
-    if(this.showTokenize){
-        console.log(tData);
-    }
-    this.listQuestion(tData);
-}
+    const questions = [];
+    let buffer = [];
 
-// Parser operand
+    function parseQuestion(raw) {
+        const text = raw.join("\n");
 
-QuestionParser.prototype.errMsg = function(msg, input){
-    this.errorCount++;
-    console.log("Parsing Error ! on "+input+" -- msg : "+msg);
-}
+        const titleMatch = text.match(/^::(.*?)::\s*(.*)/s);
+        if (!titleMatch) return null;
 
-// Read and return a symbol from input
-QuestionParser.prototype.next = function(input){
-    var curS = input.shift();
-    if(this.showParsedSymbols){
-        console.log(curS);
-    }
-    return curS
-}
+        const title = titleMatch[1].trim();
+        const body = titleMatch[2].trim();
 
-// accept : verify if the arg s is part of the language symbols.
-QuestionParser.prototype.accept = function(s){
-    var idx = this.symb.indexOf(s);
-    // index 0 exists
-    if(idx === -1){
-        this.errMsg("symbol "+s+" unknown", [" "]);
-        return false;
-    }
+        const match = body.match(/^(.*?)[{](.*)[}]$/s);
+        if (!match) return null;
 
-    return idx;
-}
+        const stem = match[1].trim();
+        const optionsBody = match[2].trim();
 
-
-
-// check : check whether the arg elt is on the head of the list
-QuestionParser.prototype.check = function(s, input){
-    if(this.accept(input[0]) == this.accept(s)){
-        return true;
-    }
-    return false;
-}
-
-// expect : expect the next symbol to be s.
-QuestionParser.prototype.expect = function(s, input) {
-    if (s == this.next(input)) {
-        //console.log("Reckognized! "+s)
-        return true;
-    } else {
-        this.errMsg("symbol " + s + " doesn't match", input);
-    }
-}
-
-QuestionParser.prototype.question = function(input){
-    console.log(input)
-
-    if (!this.check("//", input) || !this.check("::", input)){
-        this.next(input);
-    }
-
-    if (this.check("//", input)){
-        this.next(input);
-        this.next(input);
-    }
-
-    // console.log(input)
-
-    if(this.check("::", input)){
-        // this.expect("::", input);
-        var args = this.body(input);
-        var p = new Question(args.id, args.text,"", []);
-        this.reponses(input, p);
-        // this.expect("\r\n",input);
-        this.parsedQuestion.push(p);
-        if(input.length > 0){
-            this.question(input);
+        if (/^T|F$/i.test(optionsBody)) {
+            return new Question(title, stem, "truefalse", optionsBody.toUpperCase() === "T");
         }
-        return true;
-    }else{
-        return false;
-    }
-}
 
-QuestionParser.prototype.listQuestion = function(input){
-    this.question(input);
-    // this.expect("$$", input);
-}
+        const choices = [];
+        const items = optionsBody.split(/(?=[~=])/);
 
-QuestionParser.prototype.body = function(input){
-    var id = this.id(input);
-    var text = this.text(input);
-    return { id: id, text: text };
-}
+        items.forEach(item => {
+            item = item.trim();
+            if (!item) return;
 
-QuestionParser.prototype.id = function(input){
-    this.expect("::",input)
-    var curS = this.next(input);
-    if(matched = curS.match(/^[a-zA-Z0-9\s_-]+$/)){
-        return matched[0];
-    }else{
-        this.errMsg("Invalid name", input);
-    }
-}
+            const correct = item.startsWith("=");
 
-QuestionParser.prototype.text = function(input){
-    this.expect("::",input)
-    var curS = this.next(input);
-    if(matched = curS.match(/^[a-zA-Z0-9\s_-]+$/)){
-        return matched[0];
-    }else{
-        this.errMsg("Invalid name", input);
-    }
-}
+            let [value, feedback] = item.substring(1).split("#");
 
-QuestionParser.prototype.reponses = function (input, curPoi){
-    if(this.check("{", input)){
-        this.expect("{", input);
+            choices.push(new Reponse(value.trim(), correct, feedback ? feedback.trim() : null));
+        });
+
+        const isShortAnswer = choices.every(c => c.correct);
+
+        return new Question(title, stem, isShortAnswer ? "shortanswer" : "multichoice", choices);
     }
 
-    //var curS = this.next(input);
-    if (this.check("=", input) || this.check("~", input)){
-        this.next(input);
-        curPoi.addRep(input[0]);
-    } else {
-        this.next(input);
+    for (const line of cleaned) {
+        buffer.push(line);
+        if (line.includes("}")) {
+            const question = parseQuestion(buffer);
+            if (question) questions.push(question);
+            buffer = [];
+        }
     }
 
-    if(!this.check("}", input)){
-        this.reponses(input, curPoi);
-    } else{
-        this.next(input);
-    }
+        this.parsedQuestion = questions;
 }
 
 module.exports = QuestionParser;
