@@ -21,7 +21,11 @@ cli
             if (analyzer.errorCount === 0) {
                 let quest = analyzer.parsedQuestion.filter( (q) => {return q.id === args.id;});
 
-                logger.info(JSON.stringify(quest, null, 2));
+                if (quest.length === 0) {
+                    logger.warn("Identifiant absent ou incorrect.")
+                } else {
+                    logger.info(JSON.stringify(quest, null, 2));
+                }
             }
         });
     })
@@ -41,7 +45,11 @@ cli
             if (analyzer.errorCount === 0) {
                 let quest = analyzer.parsedQuestion.filter( (q) => {return q.id.includes(args.text) || q.questionType.includes(args.text) || q.text.includes(args.text)});
 
-                logger.info(JSON.stringify(quest, null, 2));
+                if (quest.length === 0) {
+                    logger.warn("Aucun résultat trouvé.")
+                } else {
+                    logger.info(JSON.stringify(quest, null, 2));
+                }
             }
         });
     })
