@@ -125,7 +125,7 @@ cli
     }
 
     // Vérification F8 — 15 à 20 questions
-    if (selected.length < 1) {
+    if (selected.length < 15) {
         return logger.warn("Vous avez moins de 15 questions.");
     }
     if (selected.length > 20) {
