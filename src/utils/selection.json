@@ -1,0 +1,112 @@
+[
+  {
+    "id": "EM U42 Ultimate q1",
+    "text": "What's the answer to this multiple-choice question?",
+    "questionType": "multichoice",
+    "responses": [
+      {
+        "text": "wrong answer",
+        "correct": false,
+        "feedback": "feedback comment on the wrong answer"
+      },
+      {
+        "text": "another wrong answer",
+        "correct": false,
+        "feedback": "feedback comment on this wrong answer"
+      },
+      {
+        "text": "right answer",
+        "correct": true,
+        "feedback": "Very good!"
+      }
+    ]
+  },
+  {
+    "id": "EM U42 Ultimate q2",
+    "text": "Deep Thought said \" is the Ultimate Answer to the Ultimate Question of Life, The Universe, and Everything.\"",
+    "questionType": "shortanswer",
+    "responses": [
+      {
+        "text": "forty two",
+        "correct": true,
+        "feedback": "Correct according to The Hitchhiker's Guide to the Galaxy!"
+      },
+      {
+        "text": "42",
+        "correct": true,
+        "feedback": "Correct, as told to Loonquawl and Phouchg"
+      },
+      {
+        "text": "forty-two",
+        "correct": true,
+        "feedback": "Correct!"
+      }
+    ]
+  },
+  {
+    "id": "U3 p32 CD.03 Present perfect vs past simple",
+    "text": "They _____ that café for as long as I can remember.",
+    "questionType": "multichoice",
+    "responses": [
+      {
+        "text": "",
+        "correct": false,
+        "feedback": null
+      },
+      {
+        "text": "'ve owned",
+        "correct": true,
+        "feedback": null
+      },
+      {
+        "text": "owned",
+        "correct": false,
+        "feedback": null
+      }
+    ]
+  },
+  {
+    "id": "U3 p32 CD.05 Present perfect vs past simple",
+    "text": "Ella _____ learning to play the guitar this week.",
+    "questionType": "multichoice",
+    "responses": [
+      {
+        "text": "",
+        "correct": false,
+        "feedback": null
+      },
+      {
+        "text": "'s started",
+        "correct": true,
+        "feedback": null
+      },
+      {
+        "text": "started",
+        "correct": false,
+        "feedback": null
+      }
+    ]
+  },
+  {
+    "id": "U3 p32 CD.09 Present perfect vs past simple",
+    "text": "Those trousers _____ of fashion in the 1970s.",
+    "questionType": "multichoice",
+    "responses": [
+      {
+        "text": "",
+        "correct": false,
+        "feedback": null
+      },
+      {
+        "text": "went out",
+        "correct": true,
+        "feedback": null
+      },
+      {
+        "text": "have gone out",
+        "correct": false,
+        "feedback": null
+      }
+    ]
+  }
+]

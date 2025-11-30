@@ -1,0 +1,106 @@
+* [33mef24926[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mmain[m[33m)[m Ajout de la génération GIFT + corrections parser
+[31m|[m * [33m72735a8[m[33m ([m[1;31morigin/main[m[33m, [m[1;31morigin/HEAD[m[33m)[m command view and seach read all datas
+[31m|[m[31m/[m  
+* [33mff9ef3a[m structural modification
+* [33m8648abd[m add msg error
+* [33m862d775[m add name
+* [33m9bd707e[m QuestionParser is functional
+* [33m064d23e[m creation of cli question
+* [33m00957c2[m add feedback argument
+* [33m1e0e6a8[m QuestionParser avancement
+* [33m9fc7fdf[m add addRep method
+* [33m632ad24[m console log deletion
+* [33m1bb5f75[m add view and search command (no functional)
+* [33m1970757[m add view and search command (no functional)
+* [33m0ce22b5[m implement questionParses (no functional)
+* [33mc1e0967[m implement Reponse
+* [33md74ddea[m implement question
+* [33m7efa72b[m Refactor: Readme.md Ajout nom de famille sauf sacha
+* [33m1cccfe0[m refactor: READM.md ajout Equipe
+* [33mf3df54f[m chore: création fichier
+* [33m8449f49[m refactor: README.md
+* [33m9b42597[m refactor: update README with installation instructions
+*   [33m883b5cf[m Merge branch 'main' of https://github.com/ABBAH-GL02/GL02_ABBAH
+[33m|[m[34m\[m  
+[33m|[m * [33m7cffbfd[m chore : architecture du code + data samples .gift
+* [34m|[m [33m2e9fb42[m refactor : caporal.js
+[34m|[m[34m/[m  
+* [33mf2af155[m refactor: TP8 final
+*   [33mc172fda[m Merge branch 'main' of https://github.com/ABBAH-GL02/GL02_ABBAH
+[35m|[m[36m\[m  
+[35m|[m *   [33m2cdd6b1[m Merge branch 'main' of https://github.com/ABBAH-GL02/GL02_ABBAH
+[35m|[m [1;31m|[m[1;32m\[m  
+[35m|[m * [1;32m|[m [33m593dbd7[m fix: avgChart
+* [1;32m|[m [1;32m|[m   [33m86601e4[m Merge branch 'main' of https://github.com/ABBAH-GL02/GL02_ABBAH
+[1;33m|[m[1;32m\[m [1;32m\[m [1;32m\[m  
+[1;33m|[m [1;32m|[m [1;32m|[m[1;32m/[m  
+[1;33m|[m [1;32m|[m[1;32m/[m[1;32m|[m   
+[1;33m|[m * [1;32m|[m [33md32c56f[m Merge branch 'main' of https://github.com/ABBAH-GL02/GL02_ABBAH
+[1;33m|[m [1;35m|[m[1;32m\[m[1;32m|[m 
+[1;33m|[m [1;35m|[m * [33m2ac571f[m fix: cmd readme
+[1;33m|[m [1;35m|[m * [33m64b8837[m refactor: fin mise en page TP8
+[1;33m|[m * [1;36m|[m [33mcc6086d[m fonction abc
+[1;33m|[m [1;36m|[m[1;36m/[m  
+* [1;36m|[m [33mc01c164[m ajout de canvas
+* [1;36m|[m [33m6573619[m fix
+[1;36m|[m[1;36m/[m  
+* [33m1c19b88[m refactor: TP8
+* [33m6ab5f9c[m fix average
+*   [33mf47f91f[m Merge branch 'main' of https://github.com/ABBAH-GL02/GL02_ABBAH
+[31m|[m[32m\[m  
+[31m|[m * [33m57f3e9f[m feat: reame
+[31m|[m * [33m623c8b2[m refactor: version de caporal
+[31m|[m * [33m5c8db3e[m chore : TP8 questions 1 to 6
+* [32m|[m [33m0983f4b[m avancement TP
+[32m|[m[32m/[m  
+* [33m054dda2[m refactor: ancien README
+* [33md4cd6fe[m chore : documents (tp8)
+* [33m225a62e[m delete .idea
+* [33m4afbab0[m add vpf parser file
+* [33m852ff9b[m Retour à l’état initial
+*   [33m7759831[m Merge pull request #4 from ABBAH-GL02/cyancertbranch
+[33m|[m[34m\[m  
+[33m|[m *   [33m3fe716e[m Merge branch 'main' into cyancertbranch
+[33m|[m [35m|[m[33m\[m  
+[33m|[m [35m|[m[33m/[m  
+[33m|[m[33m/[m[35m|[m   
+* [35m|[m   [33mb98658b[m Merge pull request #3 from ABBAH-GL02/magentabranch
+[1;31m|[m[1;32m\[m [35m\[m  
+[1;31m|[m * [35m\[m   [33m43839fd[m Merge branch 'main' into magentabranch
+[1;31m|[m [1;33m|[m[1;31m\[m [35m\[m  
+[1;31m|[m [1;33m|[m[1;31m/[m [35m/[m  
+[1;31m|[m[1;31m/[m[1;33m|[m [35m|[m   
+* [1;33m|[m [35m|[m   [33m438b367[m Résolution du conflit dans radio.js et essaie de push de yellow dans command.js
+[1;35m|[m[1;36m\[m [1;33m\[m [35m\[m  
+[1;35m|[m * [1;33m|[m [35m|[m [33m2c5fccb[m Test yellow implementation
+[1;35m|[m * [1;33m|[m [35m|[m [33md2207b9[m C'est la couleur jaune!
+* [1;36m|[m [1;33m|[m [35m|[m   [33m53c9e44[m Merge branch 'main' of https://github.com/ABBAH-GL02/GL02_ABBAH
+[31m|[m[32m\[m [1;36m\[m [1;33m\[m [35m\[m  
+[31m|[m * [1;36m|[m [1;33m|[m [35m|[m [33m4b64454[m Ajout de la couleur magenta dans Radio.js
+* [32m|[m [1;36m|[m [1;33m|[m [35m|[m [33me6a0f93[m Ajout de la couleur yellow dans command.js
+[32m|[m[32m/[m [1;36m/[m [1;33m/[m [35m/[m  
+* [1;36m/[m [1;33m/[m [35m/[m [33m5207373[m[33m ([m[1;32mmagentabranch[m[33m)[m Couleur megenta
+[1;36m|[m[1;36m/[m [1;33m/[m [35m/[m  
+* [1;33m|[m [35m|[m [33mb7001cd[m gitignore & différents packages
+[32m|[m * [35m|[m [33m111a443[m[33m ([m[1;31morigin/magentabranch[m[33m)[m Implémentation  magenta
+[32m|[m [32m|[m * [33mb2d97fa[m[33m ([m[1;31morigin/cyancertbranch[m[33m)[m modification: add cyan color
+[32m|[m [32m|[m[32m/[m  
+[32m|[m[32m/[m[32m|[m   
+[32m|[m [32m|[m * [33m0412c49[m[33m ([m[1;31morigin/greencertbranch[m[33m)[m Implémentation de la certification verte
+[32m|[m [32m|[m[32m/[m  
+[32m|[m[32m/[m[32m|[m   
+* [32m|[m [33mda4a03d[m feat : Ajout de la procédure de décollage
+[32m|[m[32m/[m  
+*   [33mb481b83[m Merge branch 'main' of https://github.com/ABBAH-GL02/GL02_ABBAH
+[34m|[m[35m\[m  
+[34m|[m * [33mfe9ab09[m Ajout de radio.js encore
+* [35m|[m [33m34f5a68[m ajouter satellite1
+[35m|[m[35m/[m  
+* [33m5bb815f[m Ajout de radio.js
+*   [33mb329f3b[m Merge branch 'main' of https://github.com/ABBAH-GL02/GL02_ABBAH
+[36m|[m[1;31m\[m  
+[36m|[m * [33mcaebdaa[m Ajout du composant satellite2
+* [1;31m|[m [33m704def9[m command.js
+[1;31m|[m[1;31m/[m  
+* [33m48a10ad[m feat : creation engine.js
+* [33m52ed089[m first commit
