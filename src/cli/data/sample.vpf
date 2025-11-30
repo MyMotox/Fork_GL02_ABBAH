@@ -1,0 +1,38 @@
+START_POI
+name: Café d'Albert
+latlng: 48.857735;2.394987
+note: 3
+END_POI
+START_POI
+name: Café Charlotte
+latlng: 48.866205;2.399279
+note: 3
+note: 3
+note: 4
+END_POI
+START_POI
+name: Café du Soleil
+latlng: 48.858074;2.406317
+END_POI
+START_POI
+name: Chez Gabin
+latlng: 48.871794;2.379538
+note: 3
+note: 2
+END_POI
+START_POI
+name: Le Faitout
+latlng: 48.876254;2.382713
+END_POI
+START_POI
+name: Alicante
+latlng: 48.887735;2.894987
+note: 2
+END_POI
+START_POI
+name: Barnabé café
+latlng: 47.987735;2.394987
+note: 2
+note: 4
+END_POI
+$$
