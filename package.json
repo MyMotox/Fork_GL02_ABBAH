@@ -21,6 +21,7 @@
     "whatwg-url": "^14.0.0"
   },
   "bin": {
-   "vpf": "./src/cli/caporalCli.js"
+   "vpf": "./src/cli/caporalCli.js",
+   "gift" : "./src/cli/questionCli.js"
   }
 }

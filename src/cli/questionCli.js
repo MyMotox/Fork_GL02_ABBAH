@@ -1,11 +1,16 @@
+#!/usr/bin/env node
+
 const cli = require("@caporal/core").default;
 const QuestionParser = require('../parsers/QuestionParser.js');
 const vg = require('vega');
 const vegalite = require('vega-lite');
 const fs = require('fs');
+const path = require("path");
 const ExamSelection = require('../classes/ExamSelection.js');
 const loadBank = require("../utils/loadBank");
 const GiftExporter = require("../utils/GiftExporter");
+const Teacher = require("../classes/Teacher");
+const { writeVCardFile } = require("../utils/VCard");
 
 // ------------------------- VIEW -------------------------
 cli
@@ -140,7 +145,48 @@ cli
     }
 });
 
-
+// ------------------------- F5 : VCARD enseignant  -------------------------
+cli
+.command("vcard", "Creation of VCard")
+.argument("<version>", "VCard Version")
+.argument("<firstname>", "Teacher's first name")
+.argument("<birthday>", "Teacher's birthday (DD/MM/YYYY)")
+.argument("<email>", "Teacher's email (TEXT@TEXT.TEXT)")
+.argument("<telephone>", "Teacher's telephone (10 digits)")
+.argument("<organization>", "Teacher's organization (TEXT)")
+.option("--out <file>", "Output vCard file path", {
+    default: "src/exports/teacher.vcf",
+})
+.action(({ logger, args, options }) => {
+    // création objet teacher
+    const teacher = new Teacher(
+        args.firstname,
+        args.birthday,
+        args.email,
+        process.argv[7], // forcer le string avant de regex sinon cela supprime les 0 devant
+        args.organization
+    );
+    //logger.info(teacher.tel);
+    const errors = teacher.validate();
+        if (errors.length > 0) {
+            logger.error("Invalid teacher information:\n- " + errors.join("\n- "));
+            logger.info("\nCorrect usage:");
+            logger.info(
+                "\t vcard <firstname> <birthday> <email> <telephone> <organization> --out [fileOutput]"
+            );
+            process.exitCode = 1;
+            return;
+        }
+    const outPath = path.join(process.cwd(), options.out);
+    try {
+        writeVCardFile(teacher,args.version,outPath);
+        logger.info(`vCard file successfully generated: ${outPath}`);
+    } catch (err) {
+        logger.error(err.message);
+        process.exitCode = 1;
+    }
+});
 
 // ------------------------- RUN -------------------------
 cli.run(process.argv.slice(2));
+
