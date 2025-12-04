@@ -10,7 +10,7 @@ class ExamSelection {
         if (fs.existsSync(SAVE_FILE)) {
             const raw = fs.readFileSync(SAVE_FILE, "utf8").trim();
 
-            // fichier existe mais vide → utiliser tableau vide
+            // fichier vide
             if (raw.length === 0) {
                 this.selected = [];
             } else {
