@@ -1,0 +1,37 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "title": "Profil de l'examen",
+  "data": {
+    "values": [
+      {
+        "type": "Vrai/Faux",
+        "count": 3
+      },
+      {
+        "type": "QCM",
+        "count": 4
+      },
+      {
+        "type": "Reponse Courte",
+        "count": 3
+      }
+    ]
+  },
+  "mark": "bar",
+  "encoding": {
+    "x": {
+      "field": "type",
+      "type": "nominal",
+      "title": "Type"
+    },
+    "y": {
+      "field": "count",
+      "type": "quantitative",
+      "title": "Nombre"
+    },
+    "color": {
+      "field": "type",
+      "type": "nominal"
+    }
+  }
+}
