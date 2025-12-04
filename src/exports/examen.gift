@@ -1,0 +1,104 @@
+::EM U42 Ultimate q1:: What's the answer to this multiple-choice question?
+{
+~wrong answer #feedback comment on the wrong answer
+~another wrong answer #feedback comment on this wrong answer
+=right answer #Very good!
+}
+
+::EM U42 Ultimate q2:: Deep Thought said " is the Ultimate Answer to the Ultimate Question of Life, The Universe, and Everything."
+{
+=forty two #Correct according to The Hitchhiker's Guide to the Galaxy!
+=42 #Correct, as told to Loonquawl and Phouchg
+=forty-two #Correct!
+}
+
+::U3 p32 CD.03 Present perfect vs past simple:: They _____ that café for as long as I can remember.
+{
+~
+='ve owned
+~owned
+}
+
+::U3 p32 CD.05 Present perfect vs past simple:: Ella _____ learning to play the guitar this week.
+{
+~
+='s started
+~started
+}
+
+::U3 p32 CD.09 Present perfect vs past simple:: Those trousers _____ of fashion in the 1970s.
+{
+~
+=went out
+~have gone out
+}
+
+::EM U42 Ultimate q3:: 42 is the Absolute Answer to everything.
+{
+~ALSE #42is the Ultimate Answer.
+}
+
+::EM U42 Ultimate q4:: When was Ulysses S. Grant born?
+{
+~
+=1822:0
+=%50%1822:2
+}
+
+::U7 p77 [It/There is] 4.2:: common for men to greet each other with a kiss on the cheek.
+{
+=It is
+=it is
+=It's
+=it's
+}
+
+::U7 p77 [It/There is] 4.3:: might sometimes be applause when a guest arrives.
+{
+=There
+=there
+}
+
+::U7 p77 [It/There is] 4.4:: no need to tip waiters in restaurants.
+{
+=There is
+=There's
+=there is
+=there's
+}
+
+::U7 p77 [It/There is] GR+.1:: is good that you can come to the party.
+{
+~
+=It
+~There
+}
+
+::U7 p77 [It/There is] GR+.2:: is some food on the table.
+{
+~It
+~
+=There
+}
+
+::U7 p77 [It/There is] GR+.3:: might be a traffic jam unless we leave early.
+{
+~It
+~
+=There
+}
+
+::U7 p77 [It/There is] GR+.4:: is almost lunchtime.
+{
+~
+=It
+~There
+}
+
+::U7 p77 [It/There is] GR+.5:: was a very nice meal. Thank you.
+{
+~
+=It
+~There
+}
+

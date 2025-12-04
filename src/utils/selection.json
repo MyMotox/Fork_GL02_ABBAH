@@ -108,5 +108,220 @@
         "feedback": null
       }
     ]
+  },
+  {
+    "id": "EM U42 Ultimate q3",
+    "text": "42 is the Absolute Answer to everything.",
+    "questionType": "multichoice",
+    "responses": [
+      {
+        "text": "ALSE",
+        "correct": false,
+        "feedback": "42is the Ultimate Answer."
+      }
+    ]
+  },
+  {
+    "id": "EM U42 Ultimate q4",
+    "text": "When was Ulysses S. Grant born?",
+    "questionType": "multichoice",
+    "responses": [
+      {
+        "text": "",
+        "correct": false,
+        "feedback": null
+      },
+      {
+        "text": "1822:0",
+        "correct": true,
+        "feedback": null
+      },
+      {
+        "text": "%50%1822:2",
+        "correct": true,
+        "feedback": null
+      }
+    ]
+  },
+  {
+    "id": "U7 p77 [It/There is] 4.2",
+    "text": "common for men to greet each other with a kiss on the cheek.",
+    "questionType": "shortanswer",
+    "responses": [
+      {
+        "text": "It is",
+        "correct": true,
+        "feedback": null
+      },
+      {
+        "text": "it is",
+        "correct": true,
+        "feedback": null
+      },
+      {
+        "text": "It's",
+        "correct": true,
+        "feedback": null
+      },
+      {
+        "text": "it's",
+        "correct": true,
+        "feedback": null
+      }
+    ]
+  },
+  {
+    "id": "U7 p77 [It/There is] 4.3",
+    "text": "might sometimes be applause when a guest arrives.",
+    "questionType": "shortanswer",
+    "responses": [
+      {
+        "text": "There",
+        "correct": true,
+        "feedback": null
+      },
+      {
+        "text": "there",
+        "correct": true,
+        "feedback": null
+      }
+    ]
+  },
+  {
+    "id": "U7 p77 [It/There is] 4.4",
+    "text": "no need to tip waiters in restaurants.",
+    "questionType": "shortanswer",
+    "responses": [
+      {
+        "text": "There is",
+        "correct": true,
+        "feedback": null
+      },
+      {
+        "text": "There's",
+        "correct": true,
+        "feedback": null
+      },
+      {
+        "text": "there is",
+        "correct": true,
+        "feedback": null
+      },
+      {
+        "text": "there's",
+        "correct": true,
+        "feedback": null
+      }
+    ]
+  },
+  {
+    "id": "U7 p77 [It/There is] GR+.1",
+    "text": "is good that you can come to the party.",
+    "questionType": "multichoice",
+    "responses": [
+      {
+        "text": "",
+        "correct": false,
+        "feedback": null
+      },
+      {
+        "text": "It",
+        "correct": true,
+        "feedback": null
+      },
+      {
+        "text": "There",
+        "correct": false,
+        "feedback": null
+      }
+    ]
+  },
+  {
+    "id": "U7 p77 [It/There is] GR+.2",
+    "text": "is some food on the table.",
+    "questionType": "multichoice",
+    "responses": [
+      {
+        "text": "It",
+        "correct": false,
+        "feedback": null
+      },
+      {
+        "text": "",
+        "correct": false,
+        "feedback": null
+      },
+      {
+        "text": "There",
+        "correct": true,
+        "feedback": null
+      }
+    ]
+  },
+  {
+    "id": "U7 p77 [It/There is] GR+.3",
+    "text": "might be a traffic jam unless we leave early.",
+    "questionType": "multichoice",
+    "responses": [
+      {
+        "text": "It",
+        "correct": false,
+        "feedback": null
+      },
+      {
+        "text": "",
+        "correct": false,
+        "feedback": null
+      },
+      {
+        "text": "There",
+        "correct": true,
+        "feedback": null
+      }
+    ]
+  },
+  {
+    "id": "U7 p77 [It/There is] GR+.4",
+    "text": "is almost lunchtime.",
+    "questionType": "multichoice",
+    "responses": [
+      {
+        "text": "",
+        "correct": false,
+        "feedback": null
+      },
+      {
+        "text": "It",
+        "correct": true,
+        "feedback": null
+      },
+      {
+        "text": "There",
+        "correct": false,
+        "feedback": null
+      }
+    ]
+  },
+  {
+    "id": "U7 p77 [It/There is] GR+.5",
+    "text": "was a very nice meal. Thank you.",
+    "questionType": "multichoice",
+    "responses": [
+      {
+        "text": "",
+        "correct": false,
+        "feedback": null
+      },
+      {
+        "text": "It",
+        "correct": true,
+        "feedback": null
+      },
+      {
+        "text": "There",
+        "correct": false,
+        "feedback": null
+      }
+    ]
   }
 ]

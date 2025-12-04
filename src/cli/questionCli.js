@@ -2,6 +2,7 @@
 
 const cli = require("@caporal/core").default;
 const QuestionParser = require('../parsers/QuestionParser.js');
+const GiftParser = require('../parsers/GiftParser.js');
 const vg = require('vega');
 const vegalite = require('vega-lite');
 const fs = require('fs');
@@ -11,6 +12,7 @@ const loadBank = require("../utils/loadBank");
 const GiftExporter = require("../utils/GiftExporter");
 const Teacher = require("../classes/Teacher");
 const { writeVCardFile } = require("../utils/VCard");
+const  { simulateExam } = require("../utils/simulateExam");
 
 // ------------------------- VIEW -------------------------
 cli
@@ -155,7 +157,7 @@ cli
 .argument("<telephone>", "Teacher's telephone (10 digits)")
 .argument("<organization>", "Teacher's organization (TEXT)")
 .option("--out <file>", "Output vCard file path", {
-    default: "src/exports/teacher.vcf",
+    default: "../exports/teacher.vcf",
 })
 .action(({ logger, args, options }) => {
     // création objet teacher
@@ -183,6 +185,32 @@ cli
         logger.info(`vCard file successfully generated: ${outPath}`);
     } catch (err) {
         logger.error(err.message);
+        process.exitCode = 1;
+    }
+});
+
+// ------------------------------ F6 : Simulation d'examen -----------------------------------------
+
+cli
+.command("simulate", "Simulate a full exam from a GIFT file")
+.argument("<file>", "Path to exam GIFT file")
+.action(async ({ logger, args }) => {
+
+    const file = path.resolve(args.file);
+    const parser = new GiftParser();
+
+    try {
+        const text = fs.readFileSync(file, "utf8");
+        const questions = parser.parseGift(text);
+
+        if (questions.length === 0) {
+            throw new Error("Aucune question valide trouvée dans ce fichier.");
+        }
+
+        await simulateExam(questions);
+
+    } catch (err) {
+        logger.error("Erreur simulation examen : " + err.message);
         process.exitCode = 1;
     }
 });
