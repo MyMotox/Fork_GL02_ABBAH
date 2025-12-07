@@ -6,7 +6,6 @@
 /**
  * Validates GIFT (General Import Format Template) file format
  * @param {string} content - File content to validate
- * @returns {object} - { isValid: boolean, errors: string[] }
  */
 function validateGiftFormat(content) {
   const errors = [];
