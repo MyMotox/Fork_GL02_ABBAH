@@ -8,13 +8,13 @@ class ExamSelection {
     constructor() {
     try {
         if (fs.existsSync(SAVE_FILE)) {
-            const raw = fs.readFileSync(SAVE_FILE, "utf8").trim();
+            const nempty = fs.readFileSync(SAVE_FILE, "utf8").trim();
 
             // fichier vide
-            if (raw.length === 0) {
+            if (nempty.length === 0) {
                 this.selected = [];
             } else {
-                this.selected = JSON.parse(raw);
+                this.selected = JSON.parse(nempty);
             }
 
         } else {
@@ -34,7 +34,7 @@ class ExamSelection {
 
     add(question) {
         if (this.selected.some(q => q.id === question.id)) {
-            throw new Error(`La question ${question.id} est déjà sélectionnée.`);
+            throw new Error(`Question ${question.id} is already in the selection`);
         }
         this.selected.push(question);
         this.save();

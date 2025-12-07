@@ -1,84 +1,76 @@
 /**
  * Utility module to validate .gift and .vcf file formats
- * Ensures files respect syntactic standards before import/usage
+ * Returns { isValid: boolean, errors: string[] }
  */
 
-/**
- * Validates GIFT (General Import Format Template) file format
- * @param {string} content - File content to validate
- */
-function validateGiftFormat(content) {
-  const errors = [];
-  
+function checkGift(content) {
+  const errs = [];
   if (!content || typeof content !== 'string') {
-	errors.push('Content must be a non-empty string');
-	return { isValid: false, errors };
+    errs.push('Content must be a non-empty string');
+    return { isValid: false, errors: errs };
   }
 
-  // Check for basic GIFT structure
-  const giftQuestionPattern = /^::/m;
-  if (!giftQuestionPattern.test(content)) {
-	errors.push('GIFT format requires questions starting with ::');
-  }
+  const lines = content.split('\n');
+  let foundQuestion = false;
+  let braceCount = 0;
 
-  // Check for balanced braces and brackets
-  const openBraces = (content.match(/{/g) || []).length;
-  const closeBraces = (content.match(/}/g) || []).length;
-  if (openBraces !== closeBraces) {
-	errors.push(`Unbalanced braces: ${openBraces} opening, ${closeBraces} closing`);
-  }
+  lines.forEach((line, idx) => {
+    const txt = line.trim();
+    if (txt === '') return; // allow empty lines
+    if (txt.startsWith('//')) return; // allow comments
 
-  return { isValid: errors.length === 0, errors };
+    if (txt.startsWith('::')) {
+      foundQuestion = true;
+      if (!/^::[A-Za-z0-9_\-\s]+::\s.+\s\{$/.test(txt)) {
+        errs.push(`Line ${idx + 1}: invalid GIFT question header`);
+      }
+      braceCount++;
+      return;
+    }
+
+    // Answer line
+    if (/^(=|~)\s.+?(?:\s#.*)?$/.test(txt)) return;
+
+    if (txt === '}') {
+      braceCount--;
+      return;
+    }
+
+    errs.push(`Line ${idx + 1}: invalid GIFT syntax`);
+  });
+
+
+  if (braceCount !== 0) errs.push('Unbalanced braces in GIFT file');
+
+  return { isValid: errs.length === 0, errors: errs };
 }
 
-/**
- * Validates VCF (Virtual Contact File) format
- * @param {string} content - File content to validate
- * @returns {object} - { isValid: boolean, errors: string[] }
- */
-function validateVcfFormat(content) {
-  const errors = [];
-  
+function checkVcf(content) {
+  const errs = [];
   if (!content || typeof content !== 'string') {
-	errors.push('Content must be a non-empty string');
-	return { isValid: false, errors };
+    errs.push('Content must be a non-empty string');
+    return { isValid: false, errors: errs };
   }
 
   const lines = content.trim().split('\n');
 
-  // Check BEGIN and END structure
-  if (!lines[0]?.includes('BEGIN:VCARD')) {
-	errors.push('VCF must start with BEGIN:VCARD');
-  }
-  if (!lines[lines.length - 1]?.includes('END:VCARD')) {
-	errors.push('VCF must end with END:VCARD');
+  if (!lines[0]?.startsWith('BEGIN:VCARD')) errs.push('Must start with BEGIN:VCARD');
+  if (!lines[lines.length - 1]?.startsWith('END:VCARD')) errs.push('Must end with END:VCARD');
+
+  if (!/^VERSION:\d+\.\d+$/m.test(content)) errs.push('VERSION:x.y required');
+  if (!/^FN:.+/m.test(content)) errs.push('FN property required');
+  if (!/^EMAIL:[^@\s]+@[^@\s]+\.[^@\s]+$/m.test(content)) errs.push('Valid EMAIL property required');
+  if (!/^TEL:\d{10}$/m.test(content)) errs.push('TEL must contain 10 digits');
+  if (!/^ORG:.+/m.test(content)) errs.push('ORG property required');
+
+  if (/^BDAY:.+/m.test(content) && !/^BDAY:\d{2}\/\d{2}\/\d{4}$/m.test(content)) {
+    errs.push('BDAY must be in DD/MM/YYYY format');
   }
 
-  // Check for required FN property
-  if (!content.includes('FN:')) {
-	errors.push('VCF requires FN (Full Name) property');
-  }
-
-  // Validate VERSION
-  if (!content.includes('VERSION:')) {
-	errors.push('VCF requires VERSION property');
-  }
-
-  // Check property format (KEY:VALUE)
-  const invalidLines = lines.filter(line => 
-	line.trim() && 
-	!line.includes(':') && 
-	!line.includes('BEGIN:') && 
-	!line.includes('END:')
-  );
-  if (invalidLines.length > 0) {
-	errors.push(`Invalid property format in lines: ${invalidLines.join(', ')}`);
-  }
-
-  return { isValid: errors.length === 0, errors };
+  return { isValid: errs.length === 0, errors: errs };
 }
 
 module.exports = {
-  validateGiftFormat,
-  validateVcfFormat
+  checkGift,
+  checkVcf
 };
