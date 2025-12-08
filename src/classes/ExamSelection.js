@@ -34,7 +34,7 @@ class ExamSelection {
 
     add(question) {
         if (this.selected.some(q => q.id === question.id)) {
-            throw new Error(`Question ${question.id} is already in the selection`);
+            throw new Error(`Question ${question.id} déjà présente`); // F7
         }
         this.selected.push(question);
         this.save();
