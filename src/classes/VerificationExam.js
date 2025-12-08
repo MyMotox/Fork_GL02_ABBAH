@@ -1,49 +1,46 @@
 class VerificationExam {
     /**
-     * Vérifie qu'il n'y a pas de doublons de questions dans un examen
-     * Vérifie que le nombre de question se situe bien entre 15 et 20
-     * @param {Array} questions - Liste des questions de l'examen
+     * Checks that there are no duplicate questions in an exam
+     * Checks that the number of questions is between 15 and 20
+     * @param {Array} questions - List of exam questions
      */
-    static verifierQuestions(questions) {
+    static checkQuestions(questions) {
 
-        // Vérifie que la liste des questions n'est pas vide ou un tableau non valide
+        // Check that the list of questions is not empty or invalid
         if (!Array.isArray(questions) || questions.length === 0) {
-            return { valide: false, doublons: [], message: "Aucune question fournie" };
-
+            return { valid: false, duplicates: [], message: "No questions provided" };
         }
 
-        // Vérifiel le nombre de questions
+        // Check the number of questions
         if (questions.length < 15 || questions.length > 20) {
             return {
-                valide: false,
-                doublons: [],
-                message: `Le nombre de questions doit être entre 15 et 20. Actuellement: ${questions.length}`
+                valid: false,
+                duplicates: [],
+                message: `The number of questions must be between 15 and 20. Current count: ${questions.length}`
             };
         }
 
-        const idConnue = new Set();
-        const doublons = new Set();
+        const seenIds = new Set();
+        const duplicates = new Set();
 
-        // Vérifie les doublons
+        // Check for duplicate IDs
         questions.forEach((question) => {
-            if (!question.id) {             //Je fais mes tests avec des id, donc il faut qu'il y en ait un
-                throw new Error('Chaque question doit avoir un id');
+            if (!question.id) { // Each question must have an id
+                throw new Error('Each question must have an id');
             }
-            
-            // Si plusieurs questions ont le même id, elles sont ajoutées à la liste des doublons
-            if (idConnue.has(question.id)) {
-                doublons.add(question.id);
+
+            if (seenIds.has(question.id)) {
+                duplicates.add(question.id);
             }
-            idConnue.add(question.id);
+            seenIds.add(question.id);
         });
 
         return {
-            valide: doublons.length === 0,
-            doublons: doublons,
-            message: doublons.length > 0 
-                ? `Doublons détectés (${doublons.length}): ${doublons.join(', ')}`
-                : 'Aucun doublon détecté'
-
+            valid: duplicates.size === 0,
+            duplicates: [...duplicates],
+            message: duplicates.size > 0 
+                ? `Duplicates detected (${duplicates.size}): ${[...duplicates].join(', ')}`
+                : 'No duplicates detected'
         };
     }
 }

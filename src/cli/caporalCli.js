@@ -1,233 +1,203 @@
 #!/usr/bin/env node
 const fs = require('fs');
+const path = require('path');
 const colors = require('colors');
 const VpfParser = require('../parsers/VpfParser.js');
-
 const vg = require('vega');
 const vegalite = require('vega-lite');
-const analyzer = require("../parsers/VpfParser");
+const { checkGift, checkVcf } = require('../utils/ConformityFormat'); 
+const VerificationExam = require('../classes/VerificationExam');
+const Question = require('../classes/Question');
+const program = require('@caporal/core').default;
 
-const cli = require("@caporal/core").default;
+program
+  .name('vpf-parser-cli')
+  .version('0.07')
 
-cli
-	.version('vpf-parser-cli')
-	.version('0.07')
-	// check Vpf
-	.command('check', 'Check if <file> is a valid Vpf file')
-	.argument('<file>', 'The file to check with Vpf parser')
-	.option('-s, --showSymbols', 'log the analyzed symbol at each step', { validator : cli.BOOLEAN, default: false })
-	.option('-t, --showTokenize', 'log the tokenization results', { validator: cli.BOOLEAN, default: false })
-	.action(({args, options, logger}) => {
-		
-		fs.readFile(args.file, 'utf8', function (err,data) {
-			if (err) {
-				return logger.warn(err);
-			}
-	  
-			var analyzer = new VpfParser(options.showTokenize, options.showSymbols);
-			analyzer.parse(data);
-			
-			if(analyzer.errorCount === 0){
-				logger.info("The .vpf file is a valid vpf file".green);
-			}else{
-				logger.info("The .vpf file contains error".red);
-			}
-			
-			logger.debug(analyzer.parsedPOI);
+  // check Vpf
+  .command('check', 'Check if <file> is a valid Vpf file') 
+  .argument('<file>', 'The file to check with Vpf parser')
+  .option('-s, --showSymbols', 'log the analyzed symbol at each step', { validator : program.BOOLEAN, default: false }) 
+  .option('-t, --showTokenize', 'log the tokenization results', { validator: program.BOOLEAN, default: false }) 
+  .action(({args, options, logger}) => { 
+    fs.readFile(args.file, 'utf8', function (err,data) { 
+      if (err) { 
+        return logger.warn(err);
+      } 
+      
+      var analyzer = new VpfParser(options.showTokenize, options.showSymbols); 
+      analyzer.parse(data);
 
-		});
-			
-	})
-	
-	// readme
-	.command('readme', 'Display the README.txt file')
-	.action(({args, options, logger}) => {
-		fs.readFile('./documents/README.txt', 'utf8', function (err, data) {
-			if (err) {
-				return logger.warn(err);
-			}
-			logger.info(data);
-		});
-			})
-	//.action(({args, options, logger}) =>
-	//  ...
-	//})
-	
-	
-	// search
-	.command('search', 'Free text search on POIs\' name')
-	.argument('<file>', 'The Vpf file to search')
-	.argument('<needle>', 'The text to look for in POI\'s names')
-	.action(({args, options, logger}) => {
-		fs.readFile(args.file, 'utf8', function (err,data) {
-			if (err) {
-				return logger.warn(err);
-			}
-	
-			const analyzer = new VpfParser();
-			analyzer.parse(data);
-			
-			if(analyzer.errorCount === 0){
-			
-				// Filtre à ajouter //
-				let poiAFiltrer = analyzer.parsedPOI;
-				poiAFiltrer = poiAFiltrer.filter( (poi) => {return poi.name.includes(args.needle);});
-				logger.info("%s", JSON.stringify(poiAFiltrer, null, 2));
-				// Filtre à ajouter //
-				
-			}else{
-				logger.info("The .vpf file contains error".red);
-			}
-		
-		});
-	})
-
-	// average
-	.command('average', 'Compute the average note of each POI')
-	.alias('avg')
-    .argument('<file>', 'The Vpf file to search')
-    .action(({args, options, logger}) => {
-        fs.readFile(args.file, 'utf8', function (err,data) {
-            if (err) {
-                return logger.warn(err);
-            }
-
-            const analyzer = new VpfParser();
-            analyzer.parse(data);
-
-            if (analyzer.errorCount === 0) {
-                const POIs = analyzer.parsedPOI;
-                POIs.forEach(poi => {
-                    let sum = 0
-                    poi.ratings.forEach(rating => {
-                        sum += parseInt(rating);
-                    })
-                    console.log(poi.ratings.length);
-                    poi.rateAvg = sum / poi.ratings.length;
-                    console.log(poi)
-                });
-            } else {
-                logger.info("The .vpf file contains error".red);
-            }
-        })
-    })
-
-	// abc
-.command('abc', 'permettant de restructurer la liste de POI sous la forme d’un objet classant les point d’intérêt par rapport à la première lettre de leur nom')
-.argument('<file>', 'The Vpf file to read')
-.action(({args, options, logger}) => {
-    fs.readFile(args.file, 'utf8', function (err, data) {
-        if (err) {
-            return logger.warn(err);
-        }
-        let analyzer = new VpfParser();
-        analyzer.parse(data);
-        if(analyzer.errorCount === 0) {
-            let poiAFiltrer = analyzer.parsedPOI;
-
-            // Restructuration des POI par la première lettre de leur nom
-            const restructuredPOI = poiAFiltrer.reduce((acc, poi) => {
-                const firstLetter = poi.name[0].toLowerCase();
-                if (!acc[firstLetter]) {
-                    acc[firstLetter] = [];
-                }
-                acc[firstLetter].push(poi);
-                return acc;
-            }, {});
-
-            logger.info("%s", JSON.stringify(restructuredPOI, null, 2));
-        } else {
-            logger.info("The .vpf file contains error".red);
-        }
+      if(analyzer.errorCount === 0){
+        logger.info("The .vpf file is a valid vpf file".green);
+      }else{
+        logger.info("The .vpf file contains error".red);
+      } 
+      logger.debug(analyzer.parsedPOI); 
     });
-})
+  })
 
+  // readme
+  .command('readme', 'Display the README.txt file')
+  .action(({ logger }) => {
+    fs.readFile('./documents/README.txt', 'utf8', (err, data) => {
+      if (err) return logger.warn(err);
+      logger.info(data);
+    });
+  })
 
+  // search
+  .command('search', "Free text search on POIs' name")
+  .argument('<file>', 'The Vpf file to search')
+  .argument('<needle>', "The text to look for in POIs' names")
+  .action(({ args, logger }) => {
+    fs.readFile(args.file, 'utf8', (err, data) => {
+      if (err) return logger.warn(err);
 
-	// average with chart
-	.command('averageChart', 'Compute the average note of each POI and export a Vega-lite chart')
-	.alias('avgChart')
-	.argument('<file>', 'The Vpf file to use')
-	.action(({args, options, logger}) => {
-		fs.readFile(args.file, 'utf8', function (err,data) {
-			if (err) {
-				return logger.warn(err);
-			}
-	
-			const analyzer = new VpfParser();
-			analyzer.parse(data);
-			
-			if(analyzer.errorCount === 0){
+      const parser = new VpfParser();
+      parser.parse(data);
 
-				// ToDo: Prepare the data for avg //
-				// let avg = <un array de POI ayant un attribut "averageRatings" égal à la moyenne des notes qu'il a reçu>
-				const avg = analyzer.parsedPOI;
-				avg.forEach(poi => {
-					if (poi.ratings.length === 0){
-						poi.averageRatings = 0;
-					} else {
-						let sum = 0
-						poi.ratings.forEach(rating => {
-							sum += parseInt(rating);
-						})
-						poi.averageRatings = sum / poi.ratings.length;
-					}
+      if (parser.errorCount === 0) {
+        let pois = parser.parsedPOI;
+        pois = pois.filter(poi => poi.name.includes(args.needle));
+        logger.info("%s", JSON.stringify(pois, null, 2));
+      } else {
+        logger.info("The .vpf file contains error".red);
+      }
+    });
+  })
 
-				});
+  // average
+  .command('average', 'Compute the average note of each POI')
+  .alias('avg')
+  .argument('<file>', 'The Vpf file to search')
+  .action(({ args, logger }) => {
+    fs.readFile(args.file, 'utf8', (err, data) => {
+      if (err) return logger.warn(err);
 
-				var avgChart = {
-					$schema: 'https://vega.github.io/schema/vega-lite/v5.json',
-					//"width": 320,
-					//"height": 460,
-					"data" : {
-							"values" : avg
-					},
-					"mark" : "bar",
-					"encoding" : {
-						"x" : {"field" : "name", "type" : "nominal",
-								"axis" : {"title" : "Restaurants' name."}
-							},
-						"y" : {"field" : "averageRatings", "type" : "quantitative",
-								"axis" : {"title" : "Average ratings for "+args.file+"."}
-							}
-					}
-				}
-				
-				
-				
-				const myChart = vegalite.compile(avgChart).spec;
-				
-				/* SVG version */
-				var runtime = vg.parse(myChart);
-				var view = new vg.View(runtime).renderer('svg').run();
-				var mySvg = view.toSVG();
-				mySvg.then(function(res){
-					fs.writeFileSync("./result.svg", res)
-					view.finalize();
-					logger.info("%s", JSON.stringify(myChart, null, 2));
-					logger.info("Chart output : ./result.svg");
-				});
-				
-				/* Canvas version */
-				/*
-				var runtime = vg.parse(myChart);
-				var view = new vg.View(runtime).renderer('canvas').background("#FFF").run();
-				var myCanvas = view.toCanvas();
-				myCanvas.then(function(res){
-					fs.writeFileSync("./result.png", res.toBuffer());
-					view.finalize();
-					logger.info(myChart);
-					logger.info("Chart output : ./result.png");
-				})			
-				*/
-				
-				
-			}else{
-				logger.info("The .vpf file contains error".red);
-			}
-			
-		});
-	})
-	
-cli.run(process.argv.slice(2));
-	
+      const parser = new VpfParser();
+      parser.parse(data);
+
+      if (parser.errorCount === 0) {
+        const pois = parser.parsedPOI;
+        pois.forEach(poi => {
+          const sum = poi.ratings.reduce((acc, r) => acc + parseInt(r, 10), 0);
+          poi.rateAvg = poi.ratings.length ? sum / poi.ratings.length : 0;
+        });
+        logger.info("%s", JSON.stringify(pois, null, 2));
+      } else {
+        logger.info("The .vpf file contains error".red);
+      }
+    });
+  })
+
+  // abc
+  .command('abc', "Restructure POIs by the first letter of their name")
+  .argument('<file>', 'The Vpf file to read')
+  .action(({ args, logger }) => {
+    fs.readFile(args.file, 'utf8', (err, data) => {
+      if (err) return logger.warn(err);
+
+      const parser = new VpfParser();
+      parser.parse(data);
+
+      if (parser.errorCount === 0) {
+        const pois = parser.parsedPOI;
+        const byFirstLetter = pois.reduce((acc, poi) => {
+          const k = poi.name[0].toLowerCase();
+          if (!acc[k]) acc[k] = [];
+          acc[k].push(poi);
+          return acc;
+        }, {});
+        logger.info("%s", JSON.stringify(byFirstLetter, null, 2));
+      } else {
+        logger.info("The .vpf file contains error".red);
+      }
+    });
+  })
+
+  // average with chart
+  .command('averageChart', 'Compute the average note of each POI and export a Vega-Lite chart')
+  .alias('avgChart')
+  .argument('<file>', 'The Vpf file to use')
+  .action(({ args, logger }) => {
+    fs.readFile(args.file, 'utf8', (err, data) => {
+      if (err) return logger.warn(err);
+
+      const parser = new VpfParser();
+      parser.parse(data);
+
+      if (parser.errorCount === 0) {
+        const pois = parser.parsedPOI.map(poi => {
+          const sum = poi.ratings.reduce((acc, r) => acc + parseInt(r, 10), 0);
+          const averageRatings = poi.ratings.length ? sum / poi.ratings.length : 0;
+          return { ...poi, averageRatings };
+        });
+
+        const avgChart = {
+          $schema: 'https://vega.github.io/schema/vega-lite/v5.json',
+          data: { values: pois },
+          mark: 'bar',
+          encoding: {
+            x: { field: 'name', type: 'nominal', axis: { title: "Restaurants' name." } },
+            y: { field: 'averageRatings', type: 'quantitative', axis: { title: `Average ratings for ${args.file}.` } }
+          }
+        };
+
+        const compiled = vegalite.compile(avgChart).spec;
+        const runtime = vg.parse(compiled);
+        const view = new vg.View(runtime).renderer('svg').run();
+        view.toSVG().then(svg => {
+          fs.writeFileSync('./result.svg', svg);
+          view.finalize();
+          logger.info("%s", JSON.stringify(compiled, null, 2));
+          logger.info('Chart output: ./result.svg');
+        });
+      } else {
+        logger.info("The .vpf file contains error".red);
+      }
+    });
+  })
+
+  //Validate GIFT/vCard formats
+  .command('validate', 'Validate a .gift or .vcf file against syntax rules')
+  .argument('<file>', 'Path to the file to validate (.gift or .vcf)')
+  .action(({ args, logger }) => {
+    const filePath = path.resolve(args.file);
+    const content = fs.readFileSync(filePath, 'utf8');
+
+    if (filePath.endsWith('.gift')) {
+      const res = checkGift(content);
+      logger.info(res.isValid ? 'GIFT format valid' : `Errors: ${res.errors.join('; ')}`);
+      process.exit(res.isValid ? 0 : 1);
+    } else if (filePath.endsWith('.vcf') || filePath.endsWith('.vcard')) {
+      const res = checkVcf(content);
+      logger.info(res.isValid ? 'vCard format valid' : `Errors: ${res.errors.join('; ')}`);
+      process.exit(res.isValid ? 0 : 1);
+    } else {
+      logger.info('Unsupported extension. Use .gift or .vcf');
+      process.exit(1);
+    }
+  })
+
+  //Check exam validity (duplicates + 15–20 questions)
+  .command('check-exam', 'Validate exam from a JSON file')
+  .argument('<file>', 'Path to JSON file containing questions')
+  .action(({ args, logger }) => {
+    const filePath = path.resolve(args.file);
+    const raw = JSON.parse(fs.readFileSync(filePath, 'utf8'));
+
+    const questions = raw.map(q =>
+      new Question(q.id, q.text, q.questionType, q.responses)
+    );
+
+    const result = VerificationExam.checkQuestions(questions);
+
+    logger.info(result.valid ? `Exam valid: ${result.message}` : `Exam invalid: ${result.message}`);
+
+    if (result.duplicates.length > 0) {
+      logger.info(`Duplicates detected: ${result.duplicates.join(', ')}`);
+    }
+  });
+
+program.run
