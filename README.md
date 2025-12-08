@@ -99,4 +99,24 @@ node questionCli.js simulate "..\exports\examen.gift"
 ```bash
 node questionCli.js vcard "1.1" "Test" "12/12/2000" "test.test@test.fr" "0123456789" "UTT1" --out "../exports/Vcard.vcf"
 ```
+### Profil d'examen
 
+- Générer le profil d'un examen
+```bash
+node src/cli/caporalCli.js generate-profile <dir> 
+```
+Exemple : 
+```bash
+node src/cli/caporalCli.js generate-profile ./src/cli/data
+```
+
+- Comparer deux profils
+```bash
+node src/cli/caporalCli.js compare-profiles <dir1> <dir2>
+```
+Exemple : 
+```bash
+node src/cli/caporalCli.js compare-profiles ./src/exports ./src/cli/data
+```
+
+**Note :** Les graphiques Vega-Lite sont générés dans `./outputs/` et visualisables sur https://vega.github.io/editor/

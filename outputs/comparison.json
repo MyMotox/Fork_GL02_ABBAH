@@ -4,34 +4,24 @@
   "data": {
     "values": [
       {
-        "type": "Vrai/Faux",
-        "category": "Examen",
-        "pct": 50
-      },
-      {
-        "type": "Vrai/Faux",
-        "category": "Banque",
-        "pct": 33.3
-      },
-      {
         "type": "QCM",
         "category": "Examen",
-        "pct": 30
+        "pct": 73.3
       },
       {
         "type": "QCM",
         "category": "Banque",
-        "pct": 46.7
+        "pct": 56.2
       },
       {
         "type": "Reponse Courte",
         "category": "Examen",
-        "pct": 20
+        "pct": 26.7
       },
       {
         "type": "Reponse Courte",
         "category": "Banque",
-        "pct": 20
+        "pct": 43.8
       }
     ]
   },

@@ -11,6 +11,12 @@ const VerificationExam = require('../classes/VerificationExam');
 const Question = require('../classes/Question');
 const program = require('@caporal/core').default;
 
+// Imports pour F9 et F10
+const ProfileGenerator = require('../profiling/profileGenerator');
+const ProfileComparator = require('../profiling/profileComparator');
+const VegaCharts = require('../profiling/vegaCharts');
+const loadBank = require('../utils/loadbank');
+
 program
   .name('vpf-parser-cli')
   .version('0.07')
@@ -223,6 +229,59 @@ program
     } catch (err) {
       logger.error(err.message);
     }
+  })
+
+  // F9 - Generate profile
+  .command('generate-profile', 'Genere le profil statistique d\'un examen GIFT')
+  .argument('<examen>', 'Chemin vers le fichier ou dossier GIFT')
+  .action(({ args, logger }) => {
+    try {
+      logger.info('Analyse du fichier: ' + args.examen);
+      
+      const questions = loadBank(args.examen);
+      const generator = new ProfileGenerator();
+      const profile = generator.analyzeQuestions(questions);
+      
+      generator.displayProfile(profile);
+      
+      const chart = VegaCharts.generateProfileChart(profile);
+      const outputPath = './outputs/profile.json';
+      VegaCharts.saveChart(chart, outputPath);
+      
+      logger.info('Profil genere avec succes: ' + outputPath);
+    } catch (err) {
+      logger.error('Erreur lors de la generation du profil: ' + err.message);
+    }
+  })
+
+  // F10 - Compare profiles
+  .command('compare-profiles', 'Compare le profil de deux examens GIFT')
+  .argument('<examen1>', 'Chemin vers le premier fichier GIFT')
+  .argument('<examen2>', 'Chemin vers le second fichier GIFT (ou banque)')
+  .action(({ args, logger }) => {
+    try {
+      logger.info('Comparaison de: ' + args.examen1 + ' et ' + args.examen2);
+      
+      const questions1 = loadBank(args.examen1);
+      const questions2 = loadBank(args.examen2);
+      
+      const generator = new ProfileGenerator();
+      const profile1 = generator.analyzeQuestions(questions1);
+      const profile2 = generator.analyzeQuestions(questions2);
+      
+      const comparator = new ProfileComparator();
+      const result = comparator.compareProfiles(profile1, profile2);
+      
+      comparator.displayComparison(result);
+      
+      const chart = VegaCharts.generateComparisonChart(result);
+      const outputPath = './outputs/comparison.json';
+      VegaCharts.saveChart(chart, outputPath);
+      
+      logger.info('Comparaison generee avec succes: ' + outputPath);
+    } catch (err) {
+      logger.error('Erreur lors de la comparaison: ' + err.message);
+    }
   });
 
-program.run
+program.run();

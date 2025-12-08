@@ -4,16 +4,12 @@
   "data": {
     "values": [
       {
-        "type": "Vrai/Faux",
-        "count": 3
-      },
-      {
         "type": "QCM",
-        "count": 4
+        "count": 231
       },
       {
         "type": "Reponse Courte",
-        "count": 3
+        "count": 180
       }
     ]
   },
