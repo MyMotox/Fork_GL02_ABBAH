@@ -70,6 +70,7 @@ function checkVcf(content) {
   return { isValid: errs.length === 0, errors: errs };
 }
 
+
 module.exports = {
   checkGift,
   checkVcf

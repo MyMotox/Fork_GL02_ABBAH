@@ -5,7 +5,8 @@ const colors = require('colors');
 const VpfParser = require('../parsers/VpfParser.js');
 const vg = require('vega');
 const vegalite = require('vega-lite');
-const { checkGift, checkVcf } = require('../utils/ConformityFormat'); 
+const { checkGift, checkVcf } = require('../utils/ConformiteFormats'); 
+const { VerifSecureGIFT, VerifSecureVCARD } = require('../utils/SecureData');
 const VerificationExam = require('../classes/VerificationExam');
 const Question = require('../classes/Question');
 const program = require('@caporal/core').default;
@@ -197,6 +198,30 @@ program
 
     if (result.duplicates.length > 0) {
       logger.info(`Duplicates detected: ${result.duplicates.join(', ')}`);
+    }
+  })
+  
+  //Secure GIFT file
+  .command('secure-gift', 'Sécurise un fichier GIFT')
+  .argument('<file>', 'Chemin vers le fichier .gift')
+  .action(({ args, logger }) => {
+    try {
+      secureGift(args.file);
+      logger.info('Les données sont bien sécurisées!');
+    } catch (err) {
+      logger.error(err.message);
+    }
+  })
+  
+  //Secure vCard file
+  .command('secure-vcard', 'Sécurise un fichier vCard')
+  .argument('<file>', 'Chemin vers le fichier .vcf ou .vcard')
+  .action(({ args, logger }) => {
+    try {
+      secureVCard(args.file);
+      logger.info('Les données sont bien sécurisées!');
+    } catch (err) {
+      logger.error(err.message);
     }
   });
 
