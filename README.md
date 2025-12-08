@@ -1,23 +1,27 @@
-# Projet GL02 - Groupe ABBAH
+# Projet GL02 - Groupe ABBAH - V1.1
 
 
 Notre projet est développé en JavaScript (Node.js) dans le cadre du cours GL02 – Fondements de l'ingénierie logicielle.
-Le code est structuré pour répondre directement au cahier des charges d'une application console "Outil de gestion еt dе génération d’еxamеns au format GIFT".
+Le code est structuré pour répondre directement au cahier des charges d'une application console "Sujet B : Outil de gestion еt dе génération d’еxamеns au format GIFT" de l'équipe Team SoftMakers
 
 ---
 
 
-## 1. Installation (à la première utilisation)
+## 1. Pré-requis & Installation (à la première utilisation)
+
+Avant d'utiliser l'application, assurez-vous d'avoir :
+- Node.js 18+ installé : https://nodejs.org/
 
 Option A — Utilisation directe via Node.js
 ```bash
-npm i -g            # installe les dépendances
+npm install         # installe les dépendances
 node questionCli.js <commande>
 ```
 
 Option B — Installation globale (npm)
 ```bash
-npm i -g            # installe les dépendances
+npm install         # installe les dépendances
+npm i -g            
 npm link            # rend les commandes bin accessibles depuis le terminal
 gift <commande>
 ```
@@ -25,15 +29,21 @@ gift <commande>
 
 ## 2. Architecture du code
 ```powershell
-├── data/                    # fichiers GIFT
 ├── documents/               # livrables et documentation
 ├── src/
 │   ├── classes/             # Modèles de données
 │   ├── parsers/             # Extraction du texte en Objets JS
 │   ├── cli/                 # Interface utilisateur
+│       └── data/            # fichiers GIFT de test
+│   ├── logging /            # Journalisation
+│   ├── profiling /          # Analyse Vega-lite
+│   ├── utils /              # Fichiers utilitaires à QuestionCli.js
 │   └── exports/             # Génération de sorties (visualisations)
 ├── tests/                   # Tests unitaires
 ```
+
+Dans le cadre des TD de GL02, les fichiers caporalCli.js et POI.js sont conservés dans le repository car ils faisaient partie des supports pédagogiques fournis.
+Ils ne sont toutefois pas utilisés dans l’implémentation finale du projet.
 
 ## 3. Equipe
 
@@ -120,3 +130,7 @@ node src/cli/caporalCli.js compare-profiles ./src/exports ./src/cli/data
 ```
 
 **Note :** Les graphiques Vega-Lite sont générés dans `./outputs/` et visualisables sur https://vega.github.io/editor/
+
+## 5. Licence
+
+Projet développé dans un contexte académique — diffusion restreinte aux étudiants du module GL02.
