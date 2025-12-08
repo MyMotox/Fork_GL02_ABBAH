@@ -2,7 +2,10 @@
 
 
 Notre projet est développé en JavaScript (Node.js) dans le cadre du cours GL02 – Fondements de l'ingénierie logicielle.
-Le code est structuré pour répondre directement au cahier des charges d'une application console "Sujet B : Outil de gestion еt dе génération d’еxamеns au format GIFT" de l'équipe Team SoftMakers
+
+Le code est structuré pour répondre directement au cahier des charges d'une application console "Sujet B : Outil de gestion еt dе génération d’еxamеns au format GIFT" de l'équipe Team SoftMakers.
+
+Notre feuille de route de développement se trouve sur Github : https://github.com/orgs/ABBAH-GL02/projects/2
 
 ---
 
@@ -39,7 +42,7 @@ gift <commande>
 │   ├── profiling /          # Analyse Vega-lite
 │   ├── utils /              # Fichiers utilitaires à QuestionCli.js
 │   └── exports/             # Génération de sorties (visualisations)
-├── tests/                   # Tests unitaires
+├── spec/                    # Tests unitaires Jasmine
 ```
 
 Dans le cadre des TD de GL02, les fichiers caporalCli.js et POI.js sont conservés dans le repository car ils faisaient partie des supports pédagogiques fournis.
@@ -113,24 +116,39 @@ node questionCli.js vcard "1.1" "Test" "12/12/2000" "test.test@test.fr" "0123456
 
 - Générer le profil d'un examen
 ```bash
-node src/cli/caporalCli.js generate-profile <dir> 
+node questionCli generate-profile <dir> 
 ```
 Exemple : 
 ```bash
-node src/cli/caporalCli.js generate-profile ./src/cli/data
+node questionCli generate-profile ./data
 ```
 
 - Comparer deux profils
 ```bash
-node src/cli/caporalCli.js compare-profiles <dir1> <dir2>
+node questionCli compare-profiles <dir1> <dir2>
 ```
 Exemple : 
 ```bash
-node src/cli/caporalCli.js compare-profiles ./src/exports ./src/cli/data
+node questionCli compare-profiles ../exports ./data
 ```
 
 **Note :** Les graphiques Vega-Lite sont générés dans `./outputs/` et visualisables sur https://vega.github.io/editor/
 
-## 5. Licence
+## 5. Tests unitaires
+
+L’application inclut une suite de tests unitaires fondée sur Jasmine (vu en TD), conformément aux exigences de Robustesse (NF3) du cahier des charges.
+
+En installation : 
+```bash
+npm install --save-dev jasmine
+npx jasmine init
+```
+
+A la racine du projet :
+```bash
+npm test
+```
+
+## 6. Licence
 
 Projet développé dans un contexte académique — diffusion restreinte aux étudiants du module GL02.

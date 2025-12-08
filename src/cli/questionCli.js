@@ -215,7 +215,111 @@ cli
     }
 });
 
+// ------------------------------ NF2 : Conformité des formats -----------------------------------------
+cli
+.command('validate', 'Validate a .gift or .vcf file against syntax rules')
+.argument('<file>', 'Path to the file to validate (.gift or .vcf)')
+.action(({ args, logger }) => {
+const filePath = path.resolve(args.file);
+const content = fs.readFileSync(filePath, 'utf8');
+
+if (filePath.endsWith('.gift')) {
+    const res = checkGift(content);
+    logger.info(res.isValid ? 'GIFT format valid' : `Errors: ${res.errors.join('; ')}`);
+    process.exit(res.isValid ? 0 : 1);
+} else if (filePath.endsWith('.vcf') || filePath.endsWith('.vcard')) {
+    const res = checkVcf(content);
+    logger.info(res.isValid ? 'vCard format valid' : `Errors: ${res.errors.join('; ')}`);
+    process.exit(res.isValid ? 0 : 1);
+} else {
+    logger.info('Unsupported extension. Use .gift or .vcf');
+    process.exit(1);
+}
+})
+
+// ------------------------------ NF7 : Sécurité des données -----------------------------------------
+cli
+.command('secure-gift', 'Sécurise un fichier GIFT')
+.argument('<file>', 'Chemin vers le fichier .gift')
+.action(({ args, logger }) => {
+try {
+    secureGift(args.file);
+    logger.info('Les données sont bien sécurisées!');
+} catch (err) {
+    logger.error(err.message);
+}
+})
+
+// ------------------------------ NF7 : Sécurité des données -----------------------------------------
+cli
+.command('secure-vcard', 'Sécurise un fichier vCard')
+.argument('<file>', 'Chemin vers le fichier .vcf ou .vcard')
+.action(({ args, logger }) => {
+try {
+    secureVCard(args.file);
+    logger.info('Les données sont bien sécurisées!');
+} catch (err) {
+    logger.error(err.message);
+}
+})
+
+// ------------------------------ F9 : Génération de profil d’un examen  -----------------------------------------
+cli
+.command('generate-profile', 'Genere le profil statistique d\'un examen GIFT')
+.argument('<examen>', 'Chemin vers le fichier ou dossier GIFT')
+.action(({ args, logger }) => {
+try {
+    logger.info('Analyse du fichier: ' + args.examen);
+    
+    const questions = loadBank(args.examen);
+    const generator = new ProfileGenerator();
+    const profile = generator.analyzeQuestions(questions);
+    
+    generator.displayProfile(profile);
+    
+    const chart = VegaCharts.generateProfileChart(profile);
+    const outputPath = './outputs/profile.json';
+    VegaCharts.saveChart(chart, outputPath);
+    
+    logger.info('Profil genere avec succes: ' + outputPath);
+} catch (err) {
+    logger.error('Erreur lors de la generation du profil: ' + err.message);
+}
+})
+
+// ------------------------------ F10 : Comparaison de profils statistiques entre examen ------------------------------
+cli
+.command('compare-profiles', 'Compare le profil de deux examens GIFT')
+.argument('<examen1>', 'Chemin vers le premier fichier GIFT')
+.argument('<examen2>', 'Chemin vers le second fichier GIFT (ou banque)')
+.action(({ args, logger }) => {
+try {
+    logger.info('Comparaison de: ' + args.examen1 + ' et ' + args.examen2);
+    
+    const questions1 = loadBank(args.examen1);
+    const questions2 = loadBank(args.examen2);
+    
+    const generator = new ProfileGenerator();
+    const profile1 = generator.analyzeQuestions(questions1);
+    const profile2 = generator.analyzeQuestions(questions2);
+    
+    const comparator = new ProfileComparator();
+    const result = comparator.compareProfiles(profile1, profile2);
+    
+    comparator.displayComparison(result);
+    
+    const chart = VegaCharts.generateComparisonChart(result);
+    const outputPath = './outputs/comparison.json';
+    VegaCharts.saveChart(chart, outputPath);
+    
+    logger.info('Comparaison generee avec succes: ' + outputPath);
+} catch (err) {
+    logger.error('Erreur lors de la comparaison: ' + err.message);
+}
+});
+
 // ------------------------- RUN -------------------------
+
 cli.run(process.argv.slice(2));
 
 
