@@ -18,6 +18,7 @@ Avant d'utiliser l'application, assurez-vous d'avoir :
 Option A — Utilisation directe via Node.js
 ```bash
 npm install         # installe les dépendances
+cd src/cli
 node questionCli.js <commande>
 ```
 
@@ -56,80 +57,124 @@ Membres: Sacha Himber; Jules Andrea; Fadi-Farhat; Emeline Nerot
 
 ## 4. Utilisation des commandes
 
-Si vous utilisez npm i -g, vous pouvez utiliser à la racine du repository avec "gift" suivi des commandes. Sinon il est recommandé d'aller dans le dossier "src/cli" et d'effectuer "node questionCli.js" suivi des commandes
+Si vous utilisez npm i -g, vous pouvez utiliser à la racine du repository avec "gift" suivi des commandes. Sinon, allez dans le dossier "src/cli" et exécutez "node questionCli.js" suivi des commandes.
 
-### Questions
-- Visualiser une question
+Pour afficher le menu d'aide :
 ```bash
-node questionCli.js view <dir> <id>
+node questionCli.js
+# ou
+node questionCli.js menu
+```
+
+### 📋 Gestion des questions
+
+**Visualiser une question**
+```bash
+node questionCli.js view <répertoire> <id>
 ```
 Exemple : 
 ```bash
-node questionCli.js view data "EM U42 Ultimate q2"
+node questionCli.js view data "U5 p49 GR2.5"
 ```
 
-- Rechercher une question
+**Rechercher une question**
 ```bash
-node questionCli.js search <dir> <text>
+node questionCli.js search <répertoire> <texte>
 ```
 Exemple : 
 ```bash
 node questionCli.js search data "Ultimate"
 ```
 
-### Examen
-- Séléctionner une question
+### 📤 Gestion des examens
+
+**Sélectionner une question**
 ```bash
-node questionCli.js select <dir> <text>
+node questionCli.js select <répertoire> <id>
 ```
 Exemple : 
 ```bash
-node questionCli.js select data "EM U42 Ultimate q2"
+node questionCli.js select data "U5 p49 GR2.5"
 ```
 
-- Afficher la séléction
+**Afficher la sélection actuelle**
 ```bash
 node questionCli.js list
 ```
 
-- Vider la séléction
+**Vider la sélection**
 ```bash
 node questionCli.js clear
 ```
 
-- Exporter un examen
+**Exporter un examen au format GIFT**
 ```bash
-node questionCli.js export "../exports/examen.gift"  
-```
-
-- Simuler un examen
-```bash
-node questionCli.js simulate "..\exports\examen.gift"
-```
-
-### Création d'une fiche VCard enseignants
-- Créer une carte enseignante
-```bash
-node questionCli.js vcard "1.1" "Test" "12/12/2000" "test.test@test.fr" "0123456789" "UTT1" --out "../exports/Vcard.vcf"
-```
-### Profil d'examen
-
-- Générer le profil d'un examen
-```bash
-node questionCli generate-profile <dir> 
+node questionCli.js export <fichier-sortie>
 ```
 Exemple : 
 ```bash
-node questionCli generate-profile ./data
+node questionCli.js export ./exports/examen.gift
 ```
 
-- Comparer deux profils
+**Simuler un examen**
 ```bash
-node questionCli compare-profiles <dir1> <dir2>
+node questionCli.js simulate <fichier-examen>
 ```
 Exemple : 
 ```bash
-node questionCli compare-profiles ../exports ./data
+node questionCli.js simulate ./exports/examen.gift
+```
+
+### 👤 Création d'une fiche vCard enseignant
+
+**Créer une carte vCard enseignant**
+```bash
+node questionCli.js vcard <version> <prénom> <anniversaire> <email> <téléphone> <organisation> [--out <fichier-sortie>]
+```
+Exemple : 
+```bash
+node questionCli.js vcard "3.0" "Jean" "15/03/1985" "jean.dupont@mail.fr" "0123456789" "UTC" --out ./exports/enseignant.vcf
+```
+
+### ✓ Validation et sécurité des données
+
+**Valider un fichier GIFT ou vCard**
+```bash
+node questionCli.js validate <fichier>
+```
+Exemple : 
+```bash
+node questionCli.js validate ./exports/examen.gift
+```
+
+**Sécuriser les données d'un fichier GIFT**
+```bash
+node questionCli.js secure-gift <fichier>
+```
+
+**Sécuriser les données d'un fichier vCard**
+```bash
+node questionCli.js secure-vcard <fichier>
+```
+
+### 📊 Analyse des profils d'examen
+
+**Générer le profil statistique d'un examen**
+```bash
+node questionCli.js generate-profile <fichier-ou-répertoire>
+```
+Exemple : 
+```bash
+node questionCli.js generate-profile ./data
+```
+
+**Comparer deux profils d'examen**
+```bash
+node questionCli.js compare-profiles <fichier1> <fichier2>
+```
+Exemple : 
+```bash
+node questionCli.js compare-profiles ./exports/examen.gift ./data
 ```
 
 **Note :** Les graphiques Vega-Lite sont générés dans `./outputs/` et visualisables sur https://vega.github.io/editor/

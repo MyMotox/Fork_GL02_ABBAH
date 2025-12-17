@@ -9,12 +9,21 @@ if (!fs.existsSync(logsDir)) {
 const logFile = path.join(logsDir, 'app.log');
 
 class Logger {
+    static quietMode = true; // Default: only log errors and warnings to console
+
+    static setQuietMode(quiet) {
+        this.quietMode = quiet;
+    }
+
     static log(level, message, data = {}) {
         const timestamp = new Date().toISOString();
         const dataStr = Object.keys(data).length ? JSON.stringify(data) : '';
         const logEntry = `[${timestamp}] ${level}: ${message} ${dataStr}\n`;
         
-        console.log(logEntry.trim());
+        // In quiet mode, only log errors and warnings to console
+        if (!this.quietMode || level === 'ERROR' || level === 'WARN') {
+            console.log(logEntry.trim());
+        }
         fs.appendFileSync(logFile, logEntry);
     }
 
@@ -49,6 +58,10 @@ class Logger {
             error: error.message,
             stack: error.stack
         });
+    }
+
+    static setVerbose() {
+        this.setQuietMode(false);
     }
 }
 
