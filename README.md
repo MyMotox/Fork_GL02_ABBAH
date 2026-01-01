@@ -5,8 +5,6 @@ Notre projet est développé en JavaScript (Node.js) dans le cadre du cours GL02
 
 Le code est structuré pour répondre directement au cahier des charges d'une application console "Sujet B : Outil de gestion еt dе génération d’еxamеns au format GIFT" de l'équipe Team SoftMakers.
 
-Notre feuille de route de développement se trouve sur Github : https://github.com/orgs/ABBAH-GL02/projects/2
-
 ---
 
 
