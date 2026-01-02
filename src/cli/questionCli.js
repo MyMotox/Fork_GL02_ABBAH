@@ -14,6 +14,7 @@ const Teacher = require("../classes/Teacher");
 const { writeVCardFile } = require("../utils/VCard");
 const  { simulateExam } = require("../utils/simulateExam");
 const Logger = require('../logging/logger');
+const { ProfileGenerator, ProfileComparator, VegaCharts } = require('../profiling');
 
 // ----------------------- MENU ----------------------
 cli

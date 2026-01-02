@@ -6,22 +6,22 @@
       {
         "type": "QCM",
         "category": "Examen",
-        "pct": 73.3
+        "pct": 66.7
       },
       {
         "type": "QCM",
         "category": "Banque",
-        "pct": 56.2
+        "pct": 56
       },
       {
         "type": "Reponse Courte",
         "category": "Examen",
-        "pct": 26.7
+        "pct": 33.3
       },
       {
         "type": "Reponse Courte",
         "category": "Banque",
-        "pct": 43.8
+        "pct": 44
       }
     ]
   },
