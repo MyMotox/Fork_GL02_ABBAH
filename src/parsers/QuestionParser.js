@@ -19,6 +19,10 @@ QuestionParser.prototype.parseGift = function(giftText){
 
     for (const line of cleaned) {
 
+        if (line.startsWith("::") && buffer.length > 0) {
+            buffer = [];
+        }
+
         buffer.push(line);
 
         // Détection très permissive d'une fermeture de question
@@ -58,7 +62,7 @@ QuestionParser.prototype.parseQuestion = function (raw) {
     // Exemple :
     //   DEBUT { REPONSES } FIN
     //
-    const match = body.match(/^(.*?){([\s\S]*?)}(.*)$/s);
+    const match = body.match(/([\s\S]*?)\{([\s\S]*?)\}([\s\S]*)/);
     if (!match) return null;
 
     const stemBefore = match[1].trim();
