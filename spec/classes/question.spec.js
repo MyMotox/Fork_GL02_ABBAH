@@ -12,6 +12,11 @@ describe("Question class", () => {
         expect(q.getResponses().length).toBe(0);
     });
 
+    it("should initialize default responses as empty array when argument is missing", () => {
+        const q = new Question("Q_Default", "Text", "Type");
+        expect(q.getResponses()).toEqual([]);
+    });
+
     it("appRep", () => {
         const q = new Question("Q1", "Test ?", "MCQ", []);
 

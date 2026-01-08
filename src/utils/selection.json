@@ -1,14 +1,6 @@
 [
   {
-    "id": "U5 p49 GR2.5",
-    "text": "Very few of the players in that team any good.",
-    "questionType": "shortanswer",
-    "responses": [
-      {
-        "text": "are",
-        "correct": true,
-        "feedback": null
-      }
-    ]
+    "id": "Q1",
+    "text": "Test"
   }
 ]
