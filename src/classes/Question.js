@@ -7,34 +7,34 @@ const Reponse = require('./Reponse');
  * @param {string} type
  * @param {Array<string>} responses
  */
-var Question = function(id, text, type, responses){
+var Question = function (id, text, type, responses) {
     this.id = id;
     this.text = text;
     this.questionType = type;
-    this.responses = [].concat(responses);
+    this.responses = responses ? [].concat(responses) : [];
 };
 
-Question.prototype.getId = function(){
+Question.prototype.getId = function () {
     return this.id;
 };
 
-Question.prototype.getText = function(){
+Question.prototype.getText = function () {
     return this.text;
 };
 
-Question.prototype.getQuestionType = function(){
+Question.prototype.getQuestionType = function () {
     return this.questionType;
 };
 
-Question.prototype.getResponses = function(){
+Question.prototype.getResponses = function () {
     return this.responses;
 };
 
-Question.prototype.equal = function(question1, question2){
+Question.prototype.equal = function (question1, question2) {
     return question1.id === question2.id;
 };
 
-Question.prototype.addRep = function(rep){
+Question.prototype.addRep = function (rep) {
     this.responses.push(rep);
 }
 
